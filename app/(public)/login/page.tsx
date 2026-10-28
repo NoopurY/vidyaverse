@@ -15,7 +15,6 @@ import {
   LockKeyhole,
   Mail,
   ShieldCheck,
-  UserCheck,
   UserCog,
   Users,
 } from "lucide-react";
@@ -105,52 +104,9 @@ function LoginForm() {
   }, []);
 
   return (
-    <div className="grid min-h-[calc(100vh-72px)] lg:min-h-[calc(100vh-80px)] lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
-      {/* Left: trust panel */}
-      <aside className="relative hidden overflow-hidden bg-[linear-gradient(160deg,#10234E_0%,#0A3A8C_100%)] text-white lg:flex lg:flex-col lg:justify-center lg:px-12 xl:px-16">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:22px_22px]"
-          aria-hidden
-        />
-        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-vv-blue2/30 blur-3xl" aria-hidden />
-        <div className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-vv-saffron/15 blur-3xl" aria-hidden />
-
-        <div className="relative max-w-md">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/90">
-            <ShieldCheck className="h-3.5 w-3.5 text-vv-saffron" aria-hidden />
-            Secure portal access
-          </span>
-          <h1 className="mt-6 text-4xl font-extrabold leading-[1.12] tracking-tight xl:text-[42px]">
-            One trusted identity
-            <br />
-            for <span className="text-vv-saffron">every student.</span>
-          </h1>
-          <p className="mt-5 text-[15px] leading-relaxed text-white/70">
-            Manage academic records, control credential consent, and enable authorised verifications through a secure, auditable ecosystem.
-          </p>
-
-          <ul className="mt-10 space-y-5">
-            {[
-              { icon: ShieldCheck, title: "Consent-based access", desc: "Students control who sees their records" },
-              { icon: UserCheck, title: "Institution-verified records", desc: "Every credential is anchored to approved intake" },
-              { icon: LockKeyhole, title: "Cryptographic audit trail", desc: "Every access event is logged and tamper-evident" },
-            ].map(({ icon: Icon, title, desc }) => (
-              <li key={title} className="flex items-start gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
-                  <Icon className="h-5 w-5 text-vv-saffron" aria-hidden />
-                </span>
-                <span>
-                  <span className="block text-[15px] font-semibold">{title}</span>
-                  <span className="block text-[13px] text-white/60">{desc}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </aside>
-
+    <div className="flex min-h-[calc(100vh-72px)] items-center justify-center bg-[radial-gradient(60%_50%_at_50%_0%,#E4EEFD_0%,#F7FAFF_60%,#FFFFFF_100%)] px-4 py-10 lg:min-h-[calc(100vh-80px)]">
       {/* Right: form */}
-      <section className="flex items-center justify-center bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF5FF_100%)] px-4 py-10 sm:px-8">
+      <section className="flex w-full justify-center">
         <div className="w-full max-w-[460px]">
           <div className="rounded-3xl border border-vv-line bg-white p-6 shadow-[0_24px_50px_-28px_rgba(16,35,78,0.35)] sm:p-8">
             <div className="flex items-center gap-3">

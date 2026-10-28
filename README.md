@@ -77,7 +77,7 @@ Open http://localhost:3000. The seed prints the demo student's APAAR and the pen
 | `HMAC_SECRET` | APAAR tokenisation (`apaarToken`) and contact hashes |
 | `FIELD_ENCRYPTION_KEY` | 32-byte key for AES-256-GCM (phone, email, parent name) |
 | `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_ID`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` | Meta WhatsApp Cloud API; leave empty for **MOCK** mode |
-| `LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL` | Optional OpenAI-compatible LLM (AI error assistant, NL search); rule-based fallback otherwise |
+| `GROQ_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL` | Optional Groq LLM (AI error assistant, NL search); rule-based fallback when no key. Defaults: Groq endpoint, `llama-3.3-70b-versatile` |
 | `APP_DOMAIN` | Public host, used for `did:web` and verification links (e.g. `vidyaverse.vercel.app`) |
 | `CRON_SECRET` | Protects `/api/cron/*` (Vercel sends it automatically) |
 | `DEMO_MODE` | `true` shows the mock OTP in a toast in production (demo deployments only) |
