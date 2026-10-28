@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  font-size: 16px;
+}
+html[data-fs="sm"] {
+  font-size: 14.5px;
+}
+html[data-fs="lg"] {
+  font-size: 17.5px;
+}
+
+body {
+  @apply bg-page text-ink text-sm antialiased;
+}
+
+/* Visible focus for keyboard users (WCAG 2.4.7) */
+:focus-visible {
+  outline: 3px solid #ff9933;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@layer components {
+  .page-title {
+    @apply text-2xl font-semibold text-ink;
+  }
+  .card-title {
+    @apply text-lg font-semibold text-ink;
+  }
+  .muted {
+    @apply text-muted;
+  }
+  .input {
+    @apply h-10 w-full rounded border border-line bg-white px-3 text-sm text-ink placeholder:text-muted focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20 disabled:bg-page;
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-ink;
+  }
+  .th {
+    @apply whitespace-nowrap border-b border-line bg-navy-tint/60 px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-navy;
+  }
+  .td {
+    @apply border-b border-line px-3 py-2.5 align-top;
+  }
+  .flagged-row {
+    box-shadow: inset 4px 0 0 #c62828;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
