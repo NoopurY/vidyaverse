@@ -79,7 +79,7 @@ const AuditLogSchema = new Schema({
   timestamp: { type: Date, required: true },
   prevHash: String,
   hash: { type: String, required: true },
-});
+}, { minimize: false }); // keep empty objects so the stored entry hashes exactly as written
 AuditLogSchema.index({ entity: 1, entityId: 1 });
 AuditLogSchema.index({ actor: 1 });
 // Append-only: any update or delete through the model layer is rejected
