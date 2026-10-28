@@ -1,13 +1,11 @@
-import { Footer, PublicNav, SiteHeader, TricolourStrip, UtilityBar } from "@/components/chrome";
+import { Footer } from "@/components/chrome";
+import { SiteHeader } from "@/components/site-header";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <TricolourStrip />
-      <UtilityBar />
       <SiteHeader />
-      <PublicNav />
-      <main id="main" tabIndex={-1} className="flex-1">
+      <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
         {children}
       </main>
       <Footer />

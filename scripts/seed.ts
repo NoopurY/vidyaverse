@@ -119,7 +119,12 @@ async function main() {
   const t0 = Date.now();
   await dbConnect();
   console.log("Connected. Resetting database…");
-  await mongoose.connection.dropDatabase();
+  try {
+    await mongoose.connection.dropDatabase();
+  } catch {
+    // Atlas users without the dropDatabase privilege: clear every collection instead
+    for (const c of await mongoose.connection.db!.listCollections().toArray()) await mongoose.connection.db!.collection(c.name).deleteMany({});
+  }
   await Promise.all(Object.values(mongoose.models).map((m) => m.syncIndexes()));
 
   await Rules.create({ key: "global", ...DEFAULT_RULES, updatedBy: "system:seed" });

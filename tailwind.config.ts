@@ -39,6 +39,20 @@ const config: Config = {
           light: "#EAF7EF",
           hover: "#0F6D06",
         },
+        // homepage palette (kept separate so the portal screens keep their existing tokens)
+        vv: {
+          navy: "#10234E",
+          blue: "#0648B5",
+          blue2: "#2166D1",
+          saffron: "#FF8A18",
+          green: "#169447",
+          ice: "#F1F7FF",
+          text: "#14264A",
+          muted: "#536581",
+          line: "#DCE7F5",
+          greenbg: "#EFFAF3",
+          orangebg: "#FFF6EC",
+        },
         page: "#F5F8FC",
         line: "#DCE5F0",
         ink: {
@@ -48,7 +62,8 @@ const config: Config = {
         muted: "#64748B",
       },
       fontFamily: {
-        sans: ["var(--font-noto)", "var(--font-noto-deva)", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        sans: ["var(--font-jakarta)", "var(--font-noto)", "var(--font-noto-deva)", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        hand: ["var(--font-hand)", "cursive"],
       },
       borderRadius: {
         DEFAULT: "10px",
