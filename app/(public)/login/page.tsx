@@ -5,17 +5,23 @@ import { signIn, getSession } from "next-auth/react";
 import {
   AlertCircle,
   ArrowRight,
+  Building2,
   CheckCircle2,
   Eye,
   EyeOff,
+  GraduationCap,
   KeyRound,
+  Landmark,
   LockKeyhole,
+  Mail,
   ShieldCheck,
   UserCheck,
+  UserCog,
+  Users,
 } from "lucide-react";
-import { Button, Field, Input } from "@/components/ui";
-import { VidyaVerseBrand, VidyaVerseLogo } from "@/components/brand";
+import { Button } from "@/components/ui";
 import { api } from "@/lib/fetcher";
+import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -25,39 +31,41 @@ const HOME: Record<string, string> = {
   STUDENT: "/student",
 };
 
+const SHOW_DEMO = process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+const DEMO_PASSWORD = "Demo@123";
+const DEMO_ACCOUNTS = [
+  { email: "admin@aicte.demo", label: "AICTE HQ Admin", desc: "Full national access", icon: Landmark, tone: "bg-[#E6F0FE] text-vv-blue" },
+  { email: "regional@aicte.demo", label: "Regional Officer", desc: "Western region view", icon: UserCog, tone: "bg-[#E6F0FE] text-vv-blue" },
+  { email: "regulator@aicte.demo", label: "Regulator", desc: "Read-only dashboards", icon: ShieldCheck, tone: "bg-[#EFEAFD] text-[#6D4FD6]" },
+  { email: "institute@demo", label: "Institution Admin", desc: "Manage institute records", icon: Building2, tone: "bg-vv-greenbg text-vv-green" },
+  { email: "operator@demo", label: "Institution Operator", desc: "Data entry & uploads", icon: Users, tone: "bg-vv-greenbg text-vv-green" },
+  { email: "student@demo", label: "Student", desc: "Own record & consent", icon: GraduationCap, tone: "bg-vv-orangebg text-vv-saffron" },
+];
+
+const inputCls =
+  "h-12 w-full rounded-xl border border-vv-line bg-white pl-11 pr-4 text-[15px] text-vv-text placeholder:text-vv-muted/60 transition focus:border-vv-blue focus:outline-none focus:ring-4 focus:ring-vv-blue/10";
+
 function LoginForm() {
   const params = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState("");
-  const [challenge, setChallenge] = useState<{
-    challengeId: string;
-    otpRequired: boolean;
-    devOtp?: string;
-  } | null>(null);
+  const [challenge, setChallenge] = useState<{ challengeId: string; otpRequired: boolean; devOtp?: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [authSuccess, setAuthSuccess] = useState(false);
   const [error, setError] = useState<string | null>(
-    params.get("reason") === "idle"
-      ? "You were signed out after 15 minutes of inactivity for security."
-      : null
+    params.get("reason") === "idle" ? "You were signed out after 15 minutes of inactivity for security." : null
   );
 
   const finish = async (challengeId: string, code: string) => {
-    const r = await signIn("credentials", {
-      challengeId,
-      otp: code,
-      redirect: false,
-    });
+    const r = await signIn("credentials", { challengeId, otp: code, redirect: false });
     if (r?.error) throw new Error("Incorrect or expired one-time password (OTP)");
     setAuthSuccess(true);
     const s = await getSession();
     const next = params.get("callbackUrl");
     window.location.href =
-      next && next.startsWith("/") && !next.startsWith("//")
-        ? next
-        : HOME[s?.user?.role ?? ""] ?? "/";
+      next && next.startsWith("/") && !next.startsWith("//") ? next : HOME[s?.user?.role ?? ""] ?? "/";
   };
 
   const handleStep1 = async (e: React.FormEvent) => {
@@ -65,14 +73,8 @@ function LoginForm() {
     setBusy(true);
     setError(null);
     try {
-      const r = await api<{
-        challengeId: string;
-        otpRequired: boolean;
-        devOtp?: string;
-      }>("/api/auth/otp", "POST", { email, password });
-      if (!r.otpRequired) {
-        return await finish(r.challengeId, "");
-      }
+      const r = await api<{ challengeId: string; otpRequired: boolean; devOtp?: string }>("/api/auth/otp", "POST", { email, password });
+      if (!r.otpRequired) return await finish(r.challengeId, "");
       setChallenge(r);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Authentication failed. Please check your credentials.");
@@ -98,207 +100,156 @@ function LoginForm() {
   // Redirect if already signed in
   useEffect(() => {
     getSession().then((s) => {
-      if (s?.user?.role) {
-        window.location.href = HOME[s.user.role] ?? "/";
-      }
+      if (s?.user?.role) window.location.href = HOME[s.user.role] ?? "/";
     });
   }, []);
 
   return (
-    <div className="min-h-screen flex">
-      {/* ── Left panel: Brand & trust principles ─────────────────────── */}
-      <div className="hidden lg:flex lg:w-[44%] xl:w-[42%] flex-col bg-navy-deep text-white relative overflow-hidden">
-        {/* Subtle geometric decoration */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-navy/30 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-navy/20 blur-3xl" />
-          <div
-            className="absolute top-1/3 right-8 w-px h-48 opacity-20"
-            style={{ background: "linear-gradient(to bottom, transparent, #FF9933, transparent)" }}
-          />
-        </div>
+    <div className="grid min-h-[calc(100vh-72px)] lg:min-h-[calc(100vh-80px)] lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+      {/* Left: trust panel */}
+      <aside className="relative hidden overflow-hidden bg-[linear-gradient(160deg,#10234E_0%,#0A3A8C_100%)] text-white lg:flex lg:flex-col lg:justify-center lg:px-12 xl:px-16">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:22px_22px]"
+          aria-hidden
+        />
+        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-vv-blue2/30 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-vv-saffron/15 blur-3xl" aria-hidden />
 
-        <div className="relative z-10 flex flex-col h-full p-10 xl:p-12">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <VidyaVerseLogo size={40} />
-            <div>
-              <span className="text-lg font-bold tracking-tight text-white">VidyaVerse</span>
-              <p className="text-[10px] text-white/50 font-medium uppercase tracking-widest leading-none mt-0.5">
-                APAAR Platform
-              </p>
-            </div>
-          </div>
-
-          {/* Main tagline */}
-          <div className="mt-auto mb-auto pt-16">
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-saffron mb-4">
-              Secure Institutional Access
-            </p>
-            <h1 className="text-3xl xl:text-4xl font-bold leading-tight text-white">
-              One trusted identity
-              <br />
-              for every student.
-            </h1>
-            <p className="mt-4 text-white/60 text-sm leading-relaxed max-w-xs">
-              Manage academic records, control credential consent, and enable
-              authorised verifications through a secure, auditable ecosystem.
-            </p>
-          </div>
-
-          {/* Trust principles */}
-          <div className="space-y-4 pb-4">
-            {[
-              {
-                icon: ShieldCheck,
-                title: "Consent-based access",
-                desc: "Students control who sees their records",
-              },
-              {
-                icon: UserCheck,
-                title: "Institution-verified records",
-                desc: "Every credential is anchored to approved intake",
-              },
-              {
-                icon: LockKeyhole,
-                title: "Cryptographic audit trail",
-                desc: "Every access event is logged and tamper-evident",
-              },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex items-start gap-3">
-                <div className="mt-0.5 flex-shrink-0 w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
-                  <Icon className="w-3.5 h-3.5 text-saffron" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-white/90">{title}</p>
-                  <p className="text-[11px] text-white/50 mt-0.5">{desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-[10px] text-white/30 pt-6 border-t border-white/10">
-            © {new Date().getFullYear()} VidyaVerse · AICTE · Government of India
+        <div className="relative max-w-md">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/90">
+            <ShieldCheck className="h-3.5 w-3.5 text-vv-saffron" aria-hidden />
+            Secure portal access
+          </span>
+          <h1 className="mt-6 text-4xl font-extrabold leading-[1.12] tracking-tight xl:text-[42px]">
+            One trusted identity
+            <br />
+            for <span className="text-vv-saffron">every student.</span>
+          </h1>
+          <p className="mt-5 text-[15px] leading-relaxed text-white/70">
+            Manage academic records, control credential consent, and enable authorised verifications through a secure, auditable ecosystem.
           </p>
-        </div>
-      </div>
 
-      {/* ── Right panel: Login form ───────────────────────────────────── */}
-      <div className="flex-1 flex flex-col items-center justify-center bg-page px-5 py-10 sm:px-8">
-        {/* Mobile logo */}
-        <div className="lg:hidden mb-8 flex items-center gap-2">
-          <VidyaVerseLogo size={32} />
-          <VidyaVerseBrand />
+          <ul className="mt-10 space-y-5">
+            {[
+              { icon: ShieldCheck, title: "Consent-based access", desc: "Students control who sees their records" },
+              { icon: UserCheck, title: "Institution-verified records", desc: "Every credential is anchored to approved intake" },
+              { icon: LockKeyhole, title: "Cryptographic audit trail", desc: "Every access event is logged and tamper-evident" },
+            ].map(({ icon: Icon, title, desc }) => (
+              <li key={title} className="flex items-start gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
+                  <Icon className="h-5 w-5 text-vv-saffron" aria-hidden />
+                </span>
+                <span>
+                  <span className="block text-[15px] font-semibold">{title}</span>
+                  <span className="block text-[13px] text-white/60">{desc}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
+      </aside>
 
-        <div className="w-full max-w-md">
-          {/* Card */}
-          <div className="bg-white rounded-2xl shadow-card border border-line p-8">
-            {/* Header */}
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-ink">
-                {challenge ? "Two-Factor Verification" : "Sign in to your account"}
-              </h2>
-              <p className="mt-1 text-sm text-muted">
-                {challenge
-                  ? "Enter the 6-digit code sent to your registered mobile number."
-                  : "Enter your institutional credentials to continue."}
-              </p>
+      {/* Right: form */}
+      <section className="flex items-center justify-center bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF5FF_100%)] px-4 py-10 sm:px-8">
+        <div className="w-full max-w-[460px]">
+          <div className="rounded-3xl border border-vv-line bg-white p-6 shadow-[0_24px_50px_-28px_rgba(16,35,78,0.35)] sm:p-8">
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#E6F0FE] text-vv-blue">
+                {challenge ? <KeyRound className="h-5 w-5" aria-hidden /> : <LockKeyhole className="h-5 w-5" aria-hidden />}
+              </span>
+              <div>
+                <h2 className="text-xl font-extrabold tracking-tight text-vv-navy">
+                  {challenge ? "Two-factor verification" : "Sign in to your account"}
+                </h2>
+                <p className="text-[13px] text-vv-muted">
+                  {challenge ? "Enter the 6-digit code for your registered mobile." : "Use your institutional or student credentials."}
+                </p>
+              </div>
             </div>
 
-            {/* Error message */}
             {error && (
-              <div className="mb-5 flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-sm text-red-700">
-                <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+              <div role="alert" className="mt-5 flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-sm text-red-700">
+                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                 <span>{error}</span>
               </div>
             )}
-
-            {/* Success message */}
             {authSuccess && (
-              <div className="mb-5 flex items-center gap-2.5 rounded-xl border border-success/30 bg-success-light p-3.5 text-sm text-success">
-                <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
-                <span>Verified — redirecting to your portal…</span>
+              <div role="status" className="mt-5 flex items-center gap-2.5 rounded-xl border border-vv-green/30 bg-vv-greenbg p-3.5 text-sm font-medium text-vv-green">
+                <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden />
+                Verified. Redirecting to your portal…
               </div>
             )}
 
-            {/* Step 1: Email + Password */}
             {!challenge ? (
-              <form onSubmit={handleStep1} className="space-y-4">
-                <Field label="Institutional Email Address" htmlFor="email">
-                  <Input
-                    id="email"
-                    type="email"
-                    autoComplete="username"
-                    required
-                    placeholder="you@institution.edu.in"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Field>
-
-                <Field label="Password" htmlFor="password">
+              <form onSubmit={handleStep1} className="mt-6 space-y-4">
+                <div>
+                  <label htmlFor="email" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-vv-muted">
+                    Email or institutional ID
+                  </label>
                   <div className="relative">
-                    <Input
+                    <Mail className="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-vv-muted" aria-hidden />
+                    <input
+                      id="email"
+                      type="email"
+                      autoComplete="username"
+                      required
+                      placeholder="you@institution.edu.in"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={inputCls}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="password" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-vv-muted">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <LockKeyhole className="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-vv-muted" aria-hidden />
+                    <input
                       id="password"
                       type={showPassword ? "text" : "password"}
                       autoComplete="current-password"
                       required
-                      placeholder="••••••••••••"
+                      placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="pr-10"
+                      className={cn(inputCls, "pr-12")}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-navy transition-colors"
+                      className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-vv-muted transition-colors hover:bg-vv-ice hover:text-vv-blue"
                       aria-label={showPassword ? "Hide password" : "Show password"}
                     >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
-                </Field>
-
+                </div>
                 <Button
                   type="submit"
                   size="xl"
-                  className="w-full mt-2"
+                  className="group h-12 w-full rounded-xl !bg-vv-blue shadow-[0_12px_24px_-12px_rgba(6,72,181,0.7)] hover:!bg-[#053a96]"
                   loading={busy}
                   disabled={authSuccess}
                 >
-                  <span>Continue to Verification</span>
-                  <ArrowRight className="h-4 w-4" />
+                  Continue to verification
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
                 </Button>
-
-                <p className="text-[11px] text-muted text-center">
-                  Accounts lock for 15 minutes after 5 consecutive failed attempts.
-                </p>
+                <p className="text-center text-[12px] text-vv-muted">Accounts lock for 15 minutes after 5 consecutive failed attempts.</p>
               </form>
             ) : (
-              /* Step 2: OTP */
-              <form onSubmit={handleStep2} className="space-y-4">
-                <div className="rounded-xl border border-navy/20 bg-navy-light/40 p-4">
-                  <p className="text-xs font-semibold text-navy">
-                    Two-Factor Authentication Required
-                  </p>
-                  <p className="mt-0.5 text-xs text-muted">
-                    A 6-digit confirmation code was sent to your registered mobile device.
-                  </p>
-                  {challenge.devOtp && (
-                    <div className="mt-2.5 rounded-lg border border-saffron/40 bg-saffron-light p-2 text-xs text-[#9A6200] font-mono">
-                      Dev OTP:{" "}
-                      <b>{challenge.devOtp}</b>
-                    </div>
-                  )}
-                </div>
-
-                <Field label="One-Time Password (OTP)" htmlFor="otp">
-                  <Input
+              <form onSubmit={handleStep2} className="mt-6 space-y-4">
+                {challenge.devOtp && (
+                  <div className="rounded-xl border border-vv-saffron/40 bg-vv-orangebg p-3 text-sm text-[#9A5A00]">
+                    Demo one-time code: <b className="font-mono text-base tracking-widest">{challenge.devOtp}</b>
+                  </div>
+                )}
+                <div>
+                  <label htmlFor="otp" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-vv-muted">
+                    One-time password
+                  </label>
+                  <input
                     id="otp"
                     inputMode="numeric"
                     pattern="\d{6}"
@@ -309,46 +260,72 @@ function LoginForm() {
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
                     placeholder="••••••"
-                    className="text-center font-mono text-xl tracking-[0.4em] h-12"
+                    className="h-14 w-full rounded-xl border border-vv-line bg-white text-center font-mono text-2xl tracking-[0.5em] text-vv-navy focus:border-vv-blue focus:outline-none focus:ring-4 focus:ring-vv-blue/10"
                   />
-                </Field>
-
+                </div>
                 <Button
                   type="submit"
                   size="xl"
-                  className="w-full"
+                  className="h-12 w-full rounded-xl !bg-vv-blue hover:!bg-[#053a96]"
                   loading={busy}
                   disabled={authSuccess}
                 >
-                  <KeyRound className="h-4 w-4" />
-                  Verify &amp; Access Portal
+                  <KeyRound className="h-4 w-4" aria-hidden />
+                  Verify &amp; access portal
                 </Button>
-
-                <div className="flex justify-between items-center pt-1">
-                  <button
-                    type="button"
-                    className="text-xs font-semibold text-navy hover:underline"
-                    onClick={() => {
-                      setChallenge(null);
-                      setOtp("");
-                      setError(null);
-                    }}
-                  >
-                    ← Sign in with a different account
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="w-full text-center text-sm font-semibold text-vv-blue hover:underline"
+                  onClick={() => {
+                    setChallenge(null);
+                    setOtp("");
+                    setError(null);
+                  }}
+                >
+                  ← Use a different account
+                </button>
               </form>
             )}
-          </div>
 
-          {/* Footer note */}
-          <p className="mt-5 text-center text-[11px] text-muted">
-            Access is restricted to authorised institutional personnel, AICTE officials, and enrolled students.
-            <br />
-            Unauthorised access attempts are logged.
+            {SHOW_DEMO && !challenge && (
+              <div className="mt-7 border-t border-vv-line pt-5">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-vv-muted">
+                  Demo accounts · click to fill (password {DEMO_PASSWORD})
+                </p>
+                <ul className="mt-3 grid grid-cols-2 gap-2">
+                  {DEMO_ACCOUNTS.map(({ email: e, label, desc, icon: Icon, tone }) => (
+                    <li key={e}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEmail(e);
+                          setPassword(DEMO_PASSWORD);
+                          setError(null);
+                        }}
+                        className={cn(
+                          "flex w-full items-center gap-2.5 rounded-xl border p-2.5 text-left transition-colors hover:border-vv-blue/50 hover:bg-vv-ice",
+                          email === e ? "border-vv-blue bg-vv-ice" : "border-vv-line"
+                        )}
+                      >
+                        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${tone}`}>
+                          <Icon className="h-4 w-4" aria-hidden />
+                        </span>
+                        <span className="min-w-0 leading-tight">
+                          <span className="block truncate text-[12.5px] font-semibold text-vv-navy">{label}</span>
+                          <span className="block truncate text-[11px] text-vv-muted">{desc}</span>
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <p className="mt-5 text-center text-[12px] leading-relaxed text-vv-muted">
+            Access is restricted to authorised institutional personnel, AICTE officials and enrolled students. Unauthorised access attempts are logged.
           </p>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
