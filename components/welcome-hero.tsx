@@ -1,32 +1,45 @@
 "use client";
 
+import React from "react";
 import { useSession } from "next-auth/react";
-import { BuildingArt, FlagMark } from "./brand";
+import { ShieldCheck } from "lucide-react";
 import { useT } from "./providers";
 
-/** Dashboard hero: greeting, portal title, subtitle, building line-art and the tagline */
-export function WelcomeHero({ title, subtitle, actions }: { title: string; subtitle: string; actions?: React.ReactNode }) {
+/** Dashboard hero banner: user greeting, role title, subtitle, and contextual action buttons */
+export function WelcomeHero({
+  title,
+  subtitle,
+  actions,
+}: {
+  title: string;
+  subtitle: string;
+  actions?: React.ReactNode;
+}) {
   const { t } = useT();
   const { data } = useSession();
   const first = data?.user?.name?.replace(/^(Dr\.|Prof\.|Shri|Smt\.)\s+/, "").split(" ")[0];
+
   return (
-    <section className="relative mb-6 overflow-hidden rounded border border-line bg-white px-6 py-6 shadow-card">
-      <BuildingArt className="pointer-events-none absolute -right-4 bottom-0 hidden h-[130px] w-[300px] opacity-80 md:block" />
-      <div className="relative max-w-2xl">
-        <p className="text-base text-ink">
-          {t("welcomeBack")}
-          {first ? `, ${first}` : ","}
-        </p>
-        <h1 className="mt-1 text-[1.75rem] font-bold leading-tight text-navy">{title}</h1>
-        <p className="mt-2 text-sm text-muted">{subtitle}</p>
-        {actions && <div className="mt-4 flex flex-wrap items-center gap-2">{actions}</div>}
-      </div>
-      <div className="absolute right-6 top-5 hidden text-right text-sm font-medium leading-snug text-navy lg:block">
-        <p>Quality Education</p>
-        <p>Stronger Institutions</p>
-        <p className="flex items-center justify-end gap-2 font-semibold">
-          Brighter India <FlagMark className="h-3 w-9" />
-        </p>
+    <section className="relative mb-6 overflow-hidden rounded-2xl border border-line bg-white p-6 shadow-card">
+      {/* Background subtle geometry */}
+      <div
+        className="pointer-events-none absolute right-0 top-0 bottom-0 w-80 opacity-40 bg-[radial-gradient(#0B3D91_1px,transparent_1px)] [background-size:16px_16px] [mask-image:linear-gradient(to_left,white,transparent)]"
+        aria-hidden
+      />
+
+      <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-navy-light px-2.5 py-0.5 text-xs font-semibold text-navy">
+            <ShieldCheck className="h-3.5 w-3.5 text-success" />
+            <span>
+              {t("welcomeBack")}
+              {first ? `, ${first}` : ""}
+            </span>
+          </div>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-ink md:text-3xl">{title}</h1>
+          <p className="mt-1.5 text-xs md:text-sm text-muted leading-relaxed max-w-2xl">{subtitle}</p>
+        </div>
+        {actions && <div className="flex flex-wrap items-center gap-2.5 shrink-0">{actions}</div>}
       </div>
     </section>
   );
