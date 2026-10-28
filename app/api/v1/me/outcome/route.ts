@@ -3,6 +3,8 @@ import { route, ApiError } from "@/lib/api";
 import { updateStudent } from "@/lib/students";
 import { Student } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({
   type: z.enum(["placement", "higher-studies", "none"]),
   organisation: z.string().max(120).optional(),

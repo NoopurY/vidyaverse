@@ -6,6 +6,8 @@ import { ledgerSummary } from "@/lib/ledger";
 import { AuditLog, Institution, Transfer, ValidationIssue, Grievance, Alert, UploadBatch } from "@/models";
 import { CURRENT_YEAR } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/institutions/:id — programs, seat ledger, issues, risk reasons, pending items, audit trail */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor, params, query }) => {
   await assertInstitutionAccess(actor, params.id);

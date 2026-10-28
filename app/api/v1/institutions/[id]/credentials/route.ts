@@ -4,6 +4,8 @@ import { audit } from "@/lib/audit";
 import { sha256 } from "@/lib/crypto";
 import { Institution } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 /** POST /api/v1/institutions/:id/credentials — rotate ERP OAuth client, API key and webhook secret (shown once) */
 export const POST = route({ roles: ["INSTITUTION"], perms: { INSTITUTION: ["admin"] } }, async ({ actor, params, ip }) => {
   await assertInstitutionAccess(actor, params.id);

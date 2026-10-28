@@ -2,6 +2,8 @@ import { cronJob } from "@/lib/cron";
 import { counsellingCheckAll, crossDuplicateCheck, lateUploadCheck, recomputeRisk, sharedContactCheck } from "@/lib/checks";
 import { getRules } from "@/lib/rules";
 
+export const maxDuration = 60; // seconds (Vercel function limit for heavy jobs)
+
 export const dynamic = "force-dynamic";
 export const GET = cronJob("risk-recompute", async () => {
   const rules = await getRules();

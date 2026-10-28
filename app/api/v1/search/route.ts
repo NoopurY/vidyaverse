@@ -4,6 +4,8 @@ import { audit } from "@/lib/audit";
 import { institutionMetrics, scopedInstitutions } from "@/lib/analytics";
 import { parseQuery, SearchFilter } from "@/lib/search";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({ query: z.string().min(2).max(500).optional(), filter: SearchFilter.optional() });
 
 /** POST /api/v1/search — natural language → whitelisted filter → institutions table */

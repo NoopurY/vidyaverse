@@ -6,13 +6,15 @@ import { randomCode, sha256 } from "@/lib/crypto";
 import { env } from "@/lib/env";
 import { OtpChallenge, User } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 // demo accounts such as "institute@demo" have no TLD, so only the basic local@domain shape is enforced
-const Body = z.object({ email: z.string().regex(/^[^\s@]+@[^\s@]+$/,"Enter a valid email").max(120), password: z.string().min(1).max(200) });
+const Body = z.object({ email: z.string().trim().regex(/^[^\s@]+@[^\s@]+$/,"Enter a valid email").max(120), password: z.string().min(1).max(200) });
 const LOCK_MINUTES = 15;
 
 /** Login step 1: verify password (with lockout) and issue an OTP challenge (AICTE + institution users). */
 export const POST = publicRoute({ body: Body, rate: { name: "login", limit: 10, windowSec: 60 } }, async ({ body, ip }) => {
-  const user = await User.findOne({ email: body.email.toLowerCase() });
+  const user = await User.findOne({ email: body.email.trim().toLowerCase() });
   const generic = new ApiError(401, "Invalid email or password");
   if (!user || !user.active) {
     await bcrypt.compare(body.password, "$2a$10$CwTycUXWue0Thq9StjUM0uJ8Z3PZsGZ7Q9gkQlR7yJqZ8ZVb1K6eW").catch(() => false); // equalise timing
@@ -22,7 +24,10 @@ export const POST = publicRoute({ body: Body, rate: { name: "login", limit: 10, 
     const mins = Math.ceil((user.lockedUntil.getTime() - Date.now()) / 60000);
     throw new ApiError(423, `Account locked after 5 failed attempts. Try again in ${mins} minute(s).`);
   }
-  const ok = await bcrypt.compare(body.password, user.passwordHash);
+  // tolerate an accidental leading/trailing space from copy-paste
+  const ok =
+    (await bcrypt.compare(body.password, user.passwordHash)) ||
+    (body.password.trim() !== body.password && (await bcrypt.compare(body.password.trim(), user.passwordHash)));
   if (!ok) {
     user.failedLogins = (user.failedLogins ?? 0) + 1;
     if (user.failedLogins >= 5) {

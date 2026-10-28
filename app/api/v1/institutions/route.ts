@@ -1,6 +1,8 @@
 import { route, paging, escapeRegex } from "@/lib/api";
 import { filtersFrom, institutionMetrics, scopedInstitutions } from "@/lib/analytics";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/institutions — scoped list with live metrics, filters and pagination */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor, query }) => {
   const f = filtersFrom(query);

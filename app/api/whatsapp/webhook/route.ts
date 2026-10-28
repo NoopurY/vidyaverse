@@ -6,6 +6,8 @@ import { rateLimit } from "@/lib/ratelimit";
 import { handleIncoming } from "@/lib/whatsapp/bot";
 import { verifyMetaSignature } from "@/lib/whatsapp/adapter";
 
+export const dynamic = "force-dynamic";
+
 /** Meta webhook verification handshake */
 export function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams;

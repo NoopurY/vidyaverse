@@ -3,6 +3,8 @@ import { route } from "@/lib/api";
 import { buildTemplate, templateBuffer } from "@/lib/template";
 import { Institution } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/uploads/template[?format=csv] — template with field descriptions, dropdowns and your program IDs */
 export const GET = route({ roles: ["INSTITUTION", "AICTE_ADMIN"] }, async ({ actor, query }) => {
   const inst = actor.institutionId ? await Institution.findById(actor.institutionId, { programs: 1 }).lean() : null;

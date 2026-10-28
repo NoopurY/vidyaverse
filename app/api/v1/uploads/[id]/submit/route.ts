@@ -6,6 +6,8 @@ import { UploadBatch, User } from "@/models";
 import { getWhatsApp } from "@/lib/whatsapp/adapter";
 import { decrypt } from "@/lib/crypto";
 
+export const dynamic = "force-dynamic";
+
 /** POST /api/v1/uploads/:id/submit — operator submits a validated draft for institution-admin approval */
 export const POST = route({ roles: ["INSTITUTION"] }, async ({ actor, params, ip }) => {
   if (!Types.ObjectId.isValid(params.id)) throw new ApiError(400, "Invalid id");

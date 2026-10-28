@@ -5,6 +5,8 @@ import { handleIncoming } from "@/lib/whatsapp/bot";
 import { getWhatsApp, normPhone } from "@/lib/whatsapp/adapter";
 import { Institution, Notification, Student, User } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const EMPLOYER = "919800000001";
 
 /** GET — personas and the recent WhatsApp traffic (mock or live) for the simulator panel */

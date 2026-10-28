@@ -3,6 +3,8 @@ import { audit } from "@/lib/audit";
 import { studentView } from "@/lib/students";
 import { AuditLog, Consent, Institution, Student, VerificationLog } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/me — the student's own record (data-rights: view my data + access history) */
 export const GET = route({ roles: ["STUDENT"] }, async ({ actor, ip }) => {
   const records = await Student.find({ apaarId: actor.studentApaar }).sort({ updatedAt: -1 });

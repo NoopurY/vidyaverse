@@ -6,6 +6,8 @@ import { getRules } from "@/lib/rules";
 import { CURRENT_YEAR, DISCIPLINES } from "@/lib/constants";
 import { Institution } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({
   programId: z.string().regex(/^[A-Z0-9-]{1,12}$/),
   name: z.string().min(2).max(120),

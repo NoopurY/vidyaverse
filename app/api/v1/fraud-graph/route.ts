@@ -5,6 +5,10 @@ import { maskName } from "@/lib/utils";
 import { ISSUE_LABEL } from "@/lib/constants";
 import { Alert, Institution, Student, ValidationIssue } from "@/models";
 
+export const dynamic = "force-dynamic";
+
+export const maxDuration = 60; // seconds (Vercel function limit for heavy jobs)
+
 type Node = { id: string; kind: "student" | "institution" | "contact"; label: string; suspicious: boolean; details: Record<string, unknown> };
 
 /** GET /api/v1/fraud-graph — students, institutions and shared contacts (masked) with suspicious clusters */

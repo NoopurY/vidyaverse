@@ -5,6 +5,8 @@ import { apaarToken, refId } from "@/lib/crypto";
 import { notifyTransfer } from "@/lib/transfers";
 import { Institution, Student, Transfer } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/transfers — incoming and outgoing transfers for my institution (AICTE: all in scope) */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor }) => {
   const instIds = (await Institution.find(institutionScope(actor), { _id: 1 }).lean()).map((i) => i._id);

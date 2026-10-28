@@ -2,6 +2,8 @@ import { route } from "@/lib/api";
 import { byState, filtersFrom, institutionMetrics, scopedInstitutions, totals } from "@/lib/analytics";
 import { CURRENT_YEAR } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/dashboard?state=&year= — national → state → institution drill-down (aggregated, no PII) */
 export const GET = route({ roles: ["AICTE_ADMIN"] }, async ({ actor, query }) => {
   const f = filtersFrom(query);

@@ -11,7 +11,12 @@ export async function dbConnect() {
     mongoose.set("strictQuery", true);
     cache.promise = mongoose.connect(env.mongoUri, { maxPoolSize: 10, serverSelectionTimeoutMS: 10000 });
   }
-  cache.conn = await cache.promise;
+  try {
+    cache.conn = await cache.promise;
+  } catch (e) {
+    cache.promise = null; // do not cache a failed connection; retry on the next request
+    throw e;
+  }
   return cache.conn;
 }
 

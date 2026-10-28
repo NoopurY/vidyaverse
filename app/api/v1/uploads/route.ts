@@ -9,6 +9,10 @@ import { isBlocking } from "@/lib/validation/rowRules";
 import { StudentRowInput } from "@/lib/validation/input";
 import { UploadBatch } from "@/models";
 
+export const dynamic = "force-dynamic";
+
+export const maxDuration = 60; // seconds (Vercel function limit for heavy jobs)
+
 const Body = z.object({ fileName: z.string().max(200), rows: z.array(StudentRowInput).min(1).max(5000) });
 
 /** POST /api/v1/uploads — validate only; stores a draft batch (rows encrypted at rest) with per-row results */

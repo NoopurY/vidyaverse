@@ -6,6 +6,8 @@ import { currentCredential, qrPresentation, subjectClaims } from "@/lib/vc/issue
 import { issuerDid } from "@/lib/vc/keys";
 import { studentForActor } from "@/lib/studentAccess";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/credentials/:apaar/pdf — signed PDF record with QR (SD-JWT presentation) and signature */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION", "STUDENT"] }, async ({ actor, params, ip }) => {
   const s = await studentForActor(actor, params.apaar);

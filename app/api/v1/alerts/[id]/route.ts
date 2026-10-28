@@ -4,6 +4,8 @@ import { route, ApiError } from "@/lib/api";
 import { audit } from "@/lib/audit";
 import { Alert } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({ action: z.enum(["acknowledge", "resolve"]) });
 
 /** PATCH /api/v1/alerts/:id — acknowledge or resolve */

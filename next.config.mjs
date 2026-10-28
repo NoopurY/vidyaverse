@@ -18,6 +18,8 @@ const csp = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // allows a production build check alongside a running dev server (NEXT_DIST_DIR=.next-build)
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   poweredByHeader: false,
   experimental: { serverComponentsExternalPackages: ["mongoose", "bcryptjs"] },
   transpilePackages: ["react-force-graph-2d", "force-graph"],

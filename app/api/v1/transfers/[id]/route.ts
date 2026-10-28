@@ -5,6 +5,8 @@ import { audit } from "@/lib/audit";
 import { completeTransfer, notifyTransfer, releaseTransfer } from "@/lib/transfers";
 import { Transfer } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({ action: z.enum(["release", "complete", "reject"]) });
 
 /** PATCH /api/v1/transfers/:id — release (old institution), complete (new institution) or reject */

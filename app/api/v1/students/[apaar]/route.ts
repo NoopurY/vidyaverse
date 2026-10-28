@@ -8,6 +8,8 @@ import { normaliseRow } from "@/lib/validation/schema";
 import { decrypt } from "@/lib/crypto";
 import { Institution, Student, ValidationIssue, Credential } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 async function findScoped(apaar: string, actor: Parameters<typeof institutionScope>[0], institutionId?: string | null) {
   const instIds = (await Institution.find(institutionScope(actor), { _id: 1 }).lean()).map((i) => String(i._id));
   const list = await Student.find({ apaarId: apaar });

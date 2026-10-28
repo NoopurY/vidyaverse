@@ -3,6 +3,8 @@ import { audit } from "@/lib/audit";
 import { snapshotAsOf } from "@/lib/students";
 import { Institution, Student } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/students/:apaar/history?asOf=YYYY-MM-DD — time-travel view of the record */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION", "STUDENT"] }, async ({ actor, params, query, ip }) => {
   let students;

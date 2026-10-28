@@ -1,6 +1,8 @@
 import { route, paging, escapeRegex } from "@/lib/api";
 import { AuditLog } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/audit — append-only audit log (read-only; there are no update/delete routes) */
 export const GET = route({ roles: ["AICTE_ADMIN"], perms: { AICTE_ADMIN: ["full", "regional"] } }, async ({ query }) => {
   const { skip, limit, page } = paging(query, 100);

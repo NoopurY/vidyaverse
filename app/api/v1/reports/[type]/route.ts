@@ -5,6 +5,10 @@ import { buildReport, REPORTS } from "@/lib/reports";
 import { tablePdf } from "@/lib/pdf";
 import { toCsv } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
+export const maxDuration = 60; // seconds (Vercel function limit for heavy jobs)
+
 /** GET /api/v1/reports/:type?format=json|csv|pdf&year=&state=&region=&discipline=&institutionType= */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor, params, query, ip }) => {
   const meta = REPORTS[params.type];

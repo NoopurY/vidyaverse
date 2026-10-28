@@ -6,6 +6,8 @@ import { certificatePdf } from "@/lib/pdf";
 import { qrPresentation, subjectClaims } from "@/lib/vc/issue";
 import { Student } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 async function load(actor: { institutionId?: string; isDegreeAwarding?: boolean }, apaar: string) {
   if (!actor.isDegreeAwarding) throw new ApiError(403, "Only degree-awarding institutions can fetch certificate data");
   if (!/^\d{12}$/.test(apaar)) throw new ApiError(400, "APAAR must be 12 digits");

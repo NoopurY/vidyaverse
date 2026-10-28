@@ -9,6 +9,10 @@ import type { StudentRow } from "@/lib/validation/schema";
 import type { ServerRowIssue } from "@/lib/validation/server";
 import { UploadBatch } from "@/models";
 
+export const dynamic = "force-dynamic";
+
+export const maxDuration = 60; // seconds (Vercel function limit for heavy jobs)
+
 const Body = z.object({ action: z.enum(["approve", "reject"]).default("approve") });
 
 /** POST /api/v1/uploads/:id/approve — institution admin commits valid rows to the central repository */

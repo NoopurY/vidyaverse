@@ -4,6 +4,8 @@ import { verifyWithConsent } from "@/lib/consent";
 import { verifyPresentation } from "@/lib/vc/issue";
 import { VerificationLog } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.union([
   z.object({ apaarId: z.string().regex(/^\d{12}$/, "APAAR must be 12 digits"), code: z.string().regex(/^\d{6}$/, "Consent code must be 6 digits") }),
   z.object({ credential: z.string().min(20).max(20000) }),

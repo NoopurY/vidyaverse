@@ -4,6 +4,8 @@ import { requestConsent } from "@/lib/consent";
 import { DEFAULT_DISCLOSED, DISCLOSABLE_FIELDS } from "@/lib/constants";
 import { env } from "@/lib/env";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({
   requesterName: z.string().min(2).max(120).default("Anyone with this link"),
   purpose: z.enum(["employment", "higher-studies", "regulatory", "other"]).default("employment"),

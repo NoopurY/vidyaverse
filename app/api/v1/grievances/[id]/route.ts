@@ -4,6 +4,8 @@ import { route, ApiError, assertInstitutionAccess } from "@/lib/api";
 import { audit } from "@/lib/audit";
 import { Grievance } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({ action: z.enum(["institution-fixed", "aicte-approved", "rejected"]), remarks: z.string().max(300).optional() });
 
 /** PATCH /api/v1/grievances/:id — institution marks fixed; AICTE approves; either may reject with remarks */

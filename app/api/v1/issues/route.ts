@@ -2,6 +2,8 @@ import { route, paging, institutionScope, canSeePII } from "@/lib/api";
 import { Institution, Student, ValidationIssue } from "@/models";
 import { maskApaar } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/issues — validation issues / flags (scoped). type=fuzzy_duplicate powers the duplicate review. */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor, query }) => {
   const insts = await Institution.find(institutionScope(actor), { name: 1 }).lean();

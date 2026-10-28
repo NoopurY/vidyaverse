@@ -3,6 +3,8 @@ import { publicRoute, route } from "@/lib/api";
 import { ConsentRequestInput, requestConsent } from "@/lib/consent";
 import { Consent } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 /** POST /api/v1/consent — a verifier (employer, institution, regulator) requests consent; no login, rate-limited */
 export const POST = publicRoute({ body: ConsentRequestInput, rate: { name: "consent-request", limit: 5, windowSec: 300 } }, async ({ body }) => {
   const c = await requestConsent(body, `verifier:${body.requesterContact}`);

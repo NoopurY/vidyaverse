@@ -5,6 +5,8 @@ import { audit } from "@/lib/audit";
 import { recomputeRisk } from "@/lib/checks";
 import { ValidationIssue } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({
   action: z.enum(["resolve", "override", "same-person", "different-person"]),
   note: z.string().max(300).optional(),

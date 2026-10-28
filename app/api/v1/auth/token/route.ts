@@ -7,6 +7,8 @@ import { safeEqual, sha256 } from "@/lib/crypto";
 import { audit } from "@/lib/audit";
 import { Institution } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({
   grant_type: z.literal("client_credentials"),
   client_id: z.string().max(100),

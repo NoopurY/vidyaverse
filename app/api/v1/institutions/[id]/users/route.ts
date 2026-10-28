@@ -5,6 +5,8 @@ import { audit } from "@/lib/audit";
 import { encrypt } from "@/lib/crypto";
 import { User } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 export const GET = route({ roles: ["INSTITUTION"], perms: { INSTITUTION: ["admin"] } }, async ({ actor, params }) => {
   await assertInstitutionAccess(actor, params.id);
   const users = await User.find({ institutionId: params.id }, { name: 1, email: 1, permission: 1, lastLogin: 1, active: 1 }).lean();

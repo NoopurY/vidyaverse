@@ -1,6 +1,8 @@
 import { publicRoute, ApiError } from "@/lib/api";
 import { apaarConnector } from "@/lib/apaar";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/mock/apaar/:id — mock APAAR/DigiLocker registry lookup (name masked, DOB year only) */
 export const GET = publicRoute({ rate: { name: "mock-apaar", limit: 30, windowSec: 60 } }, async ({ params }) => {
   if (!/^\d{12}$/.test(params.id)) throw new ApiError(400, "APAAR ID must be 12 digits");

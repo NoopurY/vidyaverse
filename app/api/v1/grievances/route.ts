@@ -5,6 +5,8 @@ import { getWhatsApp } from "@/lib/whatsapp/adapter";
 import { Grievance, Institution, Student } from "@/models";
 import { ApiError } from "@/lib/api";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/grievances — student: own; institution: own institution; AICTE: scoped */
 export const GET = route({ roles: ["STUDENT", "INSTITUTION", "AICTE_ADMIN"] }, async ({ actor }) => {
   let match: Record<string, unknown>;

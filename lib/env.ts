@@ -25,7 +25,8 @@ export const env = {
     return required("SIGNING_PUBLIC_KEY");
   },
   get appDomain() {
-    return process.env.APP_DOMAIN || "localhost:3000";
+    // explicit domain, else Vercel's production / deployment host, else local dev
+    return process.env.APP_DOMAIN || process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || "localhost:3000";
   },
   get appUrl() {
     const d = this.appDomain;

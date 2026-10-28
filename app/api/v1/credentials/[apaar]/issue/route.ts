@@ -3,6 +3,8 @@ import { audit } from "@/lib/audit";
 import { issueCredential } from "@/lib/vc/issue";
 import { studentForActor } from "@/lib/studentAccess";
 
+export const dynamic = "force-dynamic";
+
 /** POST /api/v1/credentials/:apaar/issue — (re)issue the W3C VC; previous credentials are revoked */
 export const POST = route({ roles: ["AICTE_ADMIN", "INSTITUTION", "STUDENT"] }, async ({ actor, params, ip }) => {
   const s = await studentForActor(actor, params.apaar);

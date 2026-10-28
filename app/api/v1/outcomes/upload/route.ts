@@ -3,6 +3,8 @@ import { route } from "@/lib/api";
 import { audit } from "@/lib/audit";
 import { Student } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Row = z.object({
   apaarId: z.string().regex(/^\d{12}$/),
   type: z.enum(["placement", "higher-studies", "none"]),

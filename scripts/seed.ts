@@ -6,6 +6,7 @@
 import "dotenv/config";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { createHash } from "crypto";
 import bcrypt from "bcryptjs";
 import mongoose, { Types } from "mongoose";
 import { dbConnect } from "@/lib/db";
@@ -109,6 +110,9 @@ function person(state: string): Person {
   return { name: `${first} ${surname}`, gender, parentName: `${pick(MALE)} ${surname}` };
 }
 
+/** Deterministic ObjectIds so sessions stay valid across reseeds (same id for the same institution / user) */
+const stableId = (key: string) => new Types.ObjectId(createHash("sha256").update(key).digest("hex").slice(0, 24));
+
 const SEED_ACTOR: Pick<Actor, "email" | "role"> = { email: "system:seed", role: "INSTITUTION" };
 
 async function main() {
@@ -141,7 +145,7 @@ async function main() {
         supernumeraryApproved: { nri: int(2, 5), oci: 1, fn: 1, tfw: int(1, 2), other: 0 },
       }));
       instDocs.push({
-        _id: new Types.ObjectId(),
+        _id: stableId(`inst:${code}-${i}`),
         aicteId: `AICTE-${code}-${String(i).padStart(4, "0")}`,
         name: pick(NAME_PATTERNS).replace("{c}", city) + (i === 1 && code === "MH" ? "" : ""),
         state: st.name,
@@ -365,12 +369,12 @@ async function main() {
   // ---------- users ----------
   const hash = await bcrypt.hash("Demo@123", 10);
   await User.insertMany([
-    { name: "Dr. Meenakshi Rao", email: "admin@aicte.demo", passwordHash: hash, role: "AICTE_ADMIN", permission: "full", phone: encrypt("9000000001") },
-    { name: "Shri Anil Kulkarni", email: "regional@aicte.demo", passwordHash: hash, role: "AICTE_ADMIN", permission: "regional", region: "Western", phone: encrypt("9000000002") },
-    { name: "NBA / NAAC Reviewer", email: "regulator@aicte.demo", passwordHash: hash, role: "AICTE_ADMIN", permission: "readonly", phone: encrypt("9000000003") },
-    { name: "Prof. Sunita Deshpande", email: "institute@demo", passwordHash: hash, role: "INSTITUTION", permission: "admin", institutionId: mh1._id, phone: encrypt(mh1.contactPhone!) },
-    { name: "Rahul Jadhav", email: "operator@demo", passwordHash: hash, role: "INSTITUTION", permission: "operator", institutionId: mh1._id, phone: encrypt("9000000005") },
-    { name: "Aarav Sharma", email: "student@demo", passwordHash: hash, role: "STUDENT", permission: "self", studentApaar: demoStudent.apaarId, phone: encrypt(demoPhone) },
+    { name: "Dr. Meenakshi Rao", _id: stableId("user:admin@aicte.demo"), email: "admin@aicte.demo", passwordHash: hash, role: "AICTE_ADMIN", permission: "full", phone: encrypt("9000000001") },
+    { name: "Shri Anil Kulkarni", _id: stableId("user:regional@aicte.demo"), email: "regional@aicte.demo", passwordHash: hash, role: "AICTE_ADMIN", permission: "regional", region: "Western", phone: encrypt("9000000002") },
+    { name: "NBA / NAAC Reviewer", _id: stableId("user:regulator@aicte.demo"), email: "regulator@aicte.demo", passwordHash: hash, role: "AICTE_ADMIN", permission: "readonly", phone: encrypt("9000000003") },
+    { name: "Prof. Sunita Deshpande", _id: stableId("user:institute@demo"), email: "institute@demo", passwordHash: hash, role: "INSTITUTION", permission: "admin", institutionId: mh1._id, phone: encrypt(mh1.contactPhone!) },
+    { name: "Rahul Jadhav", _id: stableId("user:operator@demo"), email: "operator@demo", passwordHash: hash, role: "INSTITUTION", permission: "operator", institutionId: mh1._id, phone: encrypt("9000000005") },
+    { name: "Aarav Sharma", _id: stableId("user:student@demo"), email: "student@demo", passwordHash: hash, role: "STUDENT", permission: "self", studentApaar: demoStudent.apaarId, phone: encrypt(demoPhone) },
   ]);
 
   const loadInst = async (id: Types.ObjectId) => (await Institution.findById(id).lean<InstitutionDoc>())!;

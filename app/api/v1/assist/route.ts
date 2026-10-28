@@ -4,6 +4,8 @@ import { chatJson } from "@/lib/llm";
 import { hintFor } from "@/lib/validation/hints";
 import { ISSUE_LABEL } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({
   lang: z.enum(["en", "hi"]).default("en"),
   errors: z

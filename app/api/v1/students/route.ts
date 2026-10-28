@@ -8,6 +8,8 @@ import { StudentRowInput } from "@/lib/validation/input";
 import { Institution, Student, ValidationIssue } from "@/models";
 import { ISSUE_LABEL } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/students — paginated, scoped, masked list with flag reasons */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor, query, ip }) => {
   requirePII(actor);

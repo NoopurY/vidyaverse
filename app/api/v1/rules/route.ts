@@ -4,6 +4,8 @@ import { getRules, RulesInput } from "@/lib/rules";
 import { recomputeRisk } from "@/lib/checks";
 import { Rules } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async () => getRules());
 
 /** PUT /api/v1/rules — AICTE HQ edits the rules engine; every change is audited and risk is recomputed */

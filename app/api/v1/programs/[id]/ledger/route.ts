@@ -3,6 +3,8 @@ import { route, ApiError, assertInstitutionAccess } from "@/lib/api";
 import { ledgerSummary } from "@/lib/ledger";
 import { CURRENT_YEAR } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/programs/:id/ledger?institutionId=&year= — approved / consumed / remaining per seat type */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor, params, query }) => {
   const institutionId = actor.role === "INSTITUTION" ? actor.institutionId! : query.get("institutionId");

@@ -3,6 +3,8 @@ import { scopedInstitutions } from "@/lib/analytics";
 import { ledgerSummary } from "@/lib/ledger";
 import { CURRENT_YEAR, SEAT_TYPE_LABEL } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/ledger — seat ledger across the actor's scope, grouped by institution and program */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor, query }) => {
   const insts = await scopedInstitutions(actor, { state: query.get("state") ?? undefined, region: query.get("region") ?? undefined, institutionId: query.get("institutionId") ?? undefined });

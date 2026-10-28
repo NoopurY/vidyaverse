@@ -3,6 +3,8 @@ import { route, ApiError } from "@/lib/api";
 import { decideConsent } from "@/lib/consent";
 import { Consent } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 const Body = z.object({ action: z.enum(["approve", "reject", "revoke"]), noticeAccepted: z.boolean().optional() });
 
 /** PATCH /api/v1/consent/:id — student approves, rejects or revokes (effective immediately) */

@@ -1,6 +1,8 @@
 import { route, paging } from "@/lib/api";
 import { Alert } from "@/models";
 
+export const dynamic = "force-dynamic";
+
 /** GET /api/v1/alerts — scoped alerts feed (polled every 10s by dashboards and the bell) */
 export const GET = route({ roles: ["AICTE_ADMIN", "INSTITUTION"] }, async ({ actor, query }) => {
   const match: Record<string, unknown> = {};
