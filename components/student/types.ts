@@ -1,0 +1,31 @@
+export type MeResponse = {
+  record: {
+    id: string;
+    apaarId: string;
+    name: string;
+    dob: string;
+    gender: string;
+    category: string;
+    nationalityStatus: string;
+    seatType: string;
+    programId: string;
+    academicYear: string;
+    admissionDate: string;
+    status: string;
+    phone?: string;
+    email?: string;
+    parentName?: string;
+    institutionStudentId?: string;
+    outcome?: { type: string; organisation?: string; year?: number; consentGiven?: boolean };
+    institution?: string;
+    institutionAicteId?: string;
+    state?: string;
+    programName?: string;
+    programLevel?: string;
+    version: number;
+  };
+  otherRecords: { institution?: string; status: string; academicYear: string }[];
+  history: { version: number; changedAt: string; changedBy: string; diff: Record<string, unknown> }[];
+  accessLog: { at: string; who: string; what: string; channel: string; consentId?: string }[];
+  consentSummary: { pending: number; active: number };
+};
