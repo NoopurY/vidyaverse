@@ -21,6 +21,7 @@ const nextConfig = {
   // allows a production build check alongside a running dev server (NEXT_DIST_DIR=.next-build)
   distDir: process.env.NEXT_DIST_DIR || ".next",
   poweredByHeader: false,
+  output: "standalone",
   experimental: { serverComponentsExternalPackages: ["mongoose", "bcryptjs"] },
   transpilePackages: ["react-force-graph-2d", "force-graph"],
   async headers() {

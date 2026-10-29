@@ -1,0 +1,31 @@
+name: Scheduled jobs
+
+# Replaces the Vercel cron entries in vercel.json.
+# Needs repo secrets APP_URL (e.g. https://vidyaverse.azurewebsites.net) and CRON_SECRET.
+on:
+  schedule:
+    - cron: "0 2 * * *" # scholarship-check
+    - cron: "0 3 * * *" # risk-recompute
+    - cron: "30 3 * * *" # consent-expiry
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the matching job
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          case "$SCHEDULE" in
+            "0 2 * * *") jobs="scholarship-check" ;;
+            "0 3 * * *") jobs="risk-recompute" ;;
+            "30 3 * * *") jobs="consent-expiry" ;;
+            *) jobs="scholarship-check risk-recompute consent-expiry" ;;
+          esac
+          for j in $jobs; do
+            curl -fsS -m 120 -H "Authorization: Bearer $CRON_SECRET" "$APP_URL/api/cron/$j"
+            echo
+          done
