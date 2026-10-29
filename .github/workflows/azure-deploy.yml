@@ -32,7 +32,8 @@ jobs:
       - name: Assemble standalone package
         run: |
           cp -r .next/static .next/standalone/.next/static
-          cp -r public .next/standalone/public
+          mkdir -p .next/standalone/public
+          cp -r public/. .next/standalone/public/
 
       - uses: actions/upload-artifact@v4
         with:
