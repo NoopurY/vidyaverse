@@ -61,9 +61,14 @@ export function templateBuffer(programs: { id: string; name: string }[], rows: P
       .join("") +
     `</dataValidations>`;
   const cfb = XLSX.CFB.read(raw, { type: "buffer" });
+<<<<<<< HEAD
   // CFB paths are rooted ("/xl/..."); without the leading slash find() silently returns null
   const entry = XLSX.CFB.find(cfb, "/xl/worksheets/sheet1.xml");
   if (!entry?.content) throw new Error("Template sheet not found while adding dropdowns");
+=======
+  const entry = XLSX.CFB.find(cfb, "xl/worksheets/sheet1.xml");
+  if (!entry?.content) return raw;
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   const sheetXml = Buffer.from(entry.content as Uint8Array).toString("utf8").replace("</sheetData>", `</sheetData>${xml}`);
   entry.content = Buffer.from(sheetXml, "utf8");
   entry.size = (entry.content as Buffer).length;

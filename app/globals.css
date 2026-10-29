@@ -4,10 +4,19 @@
 
 :root {
   color-scheme: light;
+<<<<<<< HEAD
+=======
+  --font-noto: "Inter", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-noto-deva: "Noto Sans Devanagari", "Devanagari MT", -apple-system, BlinkMacSystemFont, sans-serif;
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 }
 
 html {
   font-size: 16px;
+<<<<<<< HEAD
+=======
+  scroll-behavior: smooth;
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 }
 html[data-fs="sm"] {
   font-size: 14.5px;
@@ -17,6 +26,7 @@ html[data-fs="lg"] {
 }
 
 body {
+<<<<<<< HEAD
   @apply bg-page text-ink text-sm antialiased;
 }
 
@@ -25,10 +35,23 @@ body {
   outline: 3px solid #ff9933;
   outline-offset: 2px;
   border-radius: 4px;
+=======
+  @apply bg-page text-ink text-sm antialiased font-sans;
+  background-color: #F5F8FC;
+  color: #152238;
+}
+
+/* Accessible focus ring for keyboard navigation */
+:focus-visible {
+  outline: 2.5px solid #FF9933;
+  outline-offset: 2px;
+  border-radius: 6px;
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 }
 
 @layer components {
   .page-title {
+<<<<<<< HEAD
     @apply text-2xl font-semibold text-ink;
   }
   .card-title {
@@ -60,3 +83,75 @@ body {
     transition: none !important;
   }
 }
+=======
+    @apply text-2xl font-bold tracking-tight text-ink md:text-3xl;
+    color: #152238;
+  }
+  .card-title {
+    @apply text-base font-semibold text-ink md:text-lg;
+    color: #152238;
+  }
+  .section-title {
+    @apply text-xl font-bold tracking-tight text-ink md:text-2xl;
+    color: #152238;
+  }
+  .muted {
+    @apply text-muted;
+    color: #64748B;
+  }
+  .input {
+    @apply h-10 w-full rounded-lg border border-line bg-white px-3.5 text-sm text-ink placeholder:text-muted/70 transition-all duration-150 focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/15 disabled:bg-[#F0F4FA] disabled:cursor-not-allowed;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted;
+  }
+  .th {
+    @apply whitespace-nowrap border-b border-line bg-[#F8FAFD] px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-navy;
+  }
+  .td {
+    @apply border-b border-line/80 px-4 py-3 align-middle text-sm text-ink;
+  }
+  .flagged-row {
+    box-shadow: inset 3.5px 0 0 #C62828;
+    background-color: #FFF8F8;
+  }
+}
+
+/* Subtle custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F8FC;
+}
+::-webkit-scrollbar-thumb {
+  background: #DCE5F0;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #CBD5E1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- homepage motion (subtle; disabled by the reduced-motion rule above) ---- */
+@keyframes vv-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes vv-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.vv-float { animation: vv-float 6s ease-in-out infinite; }
+.vv-float-slow { animation: vv-float 8s ease-in-out infinite; animation-delay: -2s; }
+.vv-rise { animation: vv-rise 0.6s ease-out both; }
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020

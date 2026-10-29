@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 60" fill="none" stroke="#FFFFFF">
+  <!-- Placeholder mark. Replace this file with the official emblem artwork your organisation is authorised to use. -->
+  <circle cx="24" cy="24" r="17" stroke-width="2"/>
+  <circle cx="24" cy="24" r="3" fill="#FFFFFF"/>
+  <g stroke-width="1.2">
+    <line x1="24" y1="7" x2="24" y2="41"/><line x1="7" y1="24" x2="41" y2="24"/>
+    <line x1="12" y1="12" x2="36" y2="36"/><line x1="36" y1="12" x2="12" y2="36"/>
+    <line x1="17.5" y1="8.3" x2="30.5" y2="39.7"/><line x1="30.5" y1="8.3" x2="17.5" y2="39.7"/>
+    <line x1="8.3" y1="17.5" x2="39.7" y2="30.5"/><line x1="8.3" y1="30.5" x2="39.7" y2="17.5"/>
+  </g>
+  <line x1="8" y1="52" x2="40" y2="52" stroke-width="1.5"/>
+  <line x1="12" y1="56" x2="36" y2="56" stroke-width="1"/>
+</svg>

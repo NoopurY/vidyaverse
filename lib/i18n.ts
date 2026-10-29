@@ -3,8 +3,13 @@ export const LANGS = { en: "English", hi: "हिंदी", mr: "मराठ�
 export type Lang = keyof typeof LANGS;
 
 const en = {
+<<<<<<< HEAD
   portalTitle: "APAAR Student Data & Verification Portal",
   portalSubtitle: "All India Council for Technical Education",
+=======
+  portalTitle: "VidyaVerse",
+  portalSubtitle: "APAAR Student Identity & Verification Platform",
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   skip: "Skip to main content",
   home: "Home",
   verify: "Verify a Student",
@@ -27,6 +32,7 @@ const en = {
   accessLog: "Access Log",
   outcomes: "Outcomes",
   grievance: "Grievance",
+<<<<<<< HEAD
   heroTitle: "Every seat accountable, every student verifiable",
   heroBody: "A single, secure repository of student data from AICTE-approved institutions, keyed by APAAR ID – validated at entry, protected by a digital seat ledger, and verifiable with the student's consent.",
   forInstitutions: "For Institutions",
@@ -35,6 +41,16 @@ const en = {
   forStudentsBody: "See your verified record, download a signed certificate of record, and control who can verify you.",
   verifyCardBody: "Employers and institutions verify a record with the student's consent code or by scanning the QR.",
   howItWorks: "How it works",
+=======
+  heroTitle: "Every seat accountable. Every student verifiable.",
+  heroBody: "Bring student records, approved institutional intake, and academic identity verification into one secure, auditable ecosystem.",
+  forInstitutions: "For Institutions",
+  forInstitutionsBody: "Submit academic records, validate student information, monitor intake, and track data quality.",
+  forStudents: "For Students",
+  forStudentsBody: "Review your academic record, manage consent, and access your verifiable credentials.",
+  verifyCardBody: "Check credential authenticity and confirm record validity through authorized verification workflows.",
+  howItWorks: "How VidyaVerse works",
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   searchPlaceholder: "Ask: colleges in Maharashtra exceeding intake in CSE",
   notifications: "Notifications",
   privacy: "Privacy Policy",
@@ -50,6 +66,7 @@ const en = {
   approve: "Approve",
   reject: "Reject",
   revoke: "Revoke",
+<<<<<<< HEAD
   uploadTitle: "Upload student data",
   uploadSteps: "1. Download the template → 2. Fill and drop the file → 3. Fix highlighted errors → 4. Validate & submit → 5. Admin approves.",
   dropHere: "Drag and drop your Excel / CSV file here",
@@ -58,12 +75,32 @@ const en = {
   sampleFile: "Sample file",
   validateSave: "Validate & save draft",
   noData: "Nothing to show yet",
+=======
+  welcomeBack: "Welcome back",
+  admissionMonitoring: "Admission Monitoring",
+  anomaliesAlerts: "Anomalies & Alerts",
+  integrityGraph: "Academic Integrity Graph",
+  reportsAnalytics: "Reports & Analytics",
+  auditLogs: "Audit Logs",
+  helpSupport: "Help & Support",
+  academicYear: "Academic Year",
+  sidebarTagline: "Building a Transparent, Verifiable and Future-Ready Academic Ecosystem",
+  noData: "Nothing to show yet",
+  accessPortal: "Access Portal",
+  studentPortal: "Student Portal",
+  institutionPortal: "Institution Portal",
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 };
 export type DictKey = keyof typeof en;
 
 const hi: Record<DictKey, string> = {
+<<<<<<< HEAD
   portalTitle: "APAAR छात्र डेटा एवं सत्यापन पोर्टल",
   portalSubtitle: "अखिल भारतीय तकनीकी शिक्षा परिषद",
+=======
+  portalTitle: "विद्यावर्स (VidyaVerse)",
+  portalSubtitle: "APAAR छात्र पहचान एवं सत्यापन प्लेटफॉर्म",
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   skip: "मुख्य सामग्री पर जाएँ",
   home: "मुखपृष्ठ",
   verify: "छात्र सत्यापन",
@@ -86,6 +123,7 @@ const hi: Record<DictKey, string> = {
   accessLog: "एक्सेस लॉग",
   outcomes: "परिणाम",
   grievance: "शिकायत",
+<<<<<<< HEAD
   heroTitle: "हर सीट जवाबदेह, हर छात्र सत्यापन योग्य",
   heroBody: "AICTE-अनुमोदित संस्थानों के छात्र डेटा का एकल, सुरक्षित भंडार – APAAR आईडी पर आधारित, प्रवेश पर सत्यापित, डिजिटल सीट लेजर से सुरक्षित और छात्र की सहमति से सत्यापन योग्य।",
   forInstitutions: "संस्थानों के लिए",
@@ -94,6 +132,16 @@ const hi: Record<DictKey, string> = {
   forStudentsBody: "अपना सत्यापित रिकॉर्ड देखें, हस्ताक्षरित प्रमाणपत्र डाउनलोड करें और सत्यापन पर नियंत्रण रखें।",
   verifyCardBody: "नियोक्ता छात्र के सहमति कोड या QR से रिकॉर्ड सत्यापित करते हैं।",
   howItWorks: "यह कैसे काम करता है",
+=======
+  heroTitle: "हर सीट जवाबदेह। हर छात्र सत्यापन योग्य।",
+  heroBody: "छात्र रिकॉर्ड, स्वीकृत संस्थागत प्रवेश, और शैक्षणिक पहचान सत्यापन को एक सुरक्षित, ऑडिट-योग्य प्रणाली में लाएं।",
+  forInstitutions: "संस्थानों के लिए",
+  forInstitutionsBody: "शैक्षणिक रिकॉर्ड जमा करें, छात्र जानकारी मान्य करें, प्रवेश की निगरानी करें और डेटा गुणवत्ता ट्रैक करें।",
+  forStudents: "छात्रों के लिए",
+  forStudentsBody: "अपना शैक्षणिक रिकॉर्ड देखें, सहमति प्रबंधित करें और अपने सत्यापन योग्य क्रेडेंशियल तक पहुंचें।",
+  verifyCardBody: "क्रेडेंशियल की प्रामाणिकता जांचें और अधिकृत सत्यापन वर्कफ़्लो के माध्यम से रिकॉर्ड की वैधता की पुष्टि करें।",
+  howItWorks: "विद्यावर्स कैसे काम करता है",
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   searchPlaceholder: "पूछें: महाराष्ट्र में CSE में प्रवेश सीमा से अधिक कॉलेज",
   notifications: "सूचनाएँ",
   privacy: "गोपनीयता नीति",
@@ -109,6 +157,7 @@ const hi: Record<DictKey, string> = {
   approve: "स्वीकृत करें",
   reject: "अस्वीकार करें",
   revoke: "वापस लें",
+<<<<<<< HEAD
   uploadTitle: "छात्र डेटा अपलोड करें",
   uploadSteps: "1. टेम्पलेट डाउनलोड करें → 2. भरकर फ़ाइल डालें → 3. लाल त्रुटियाँ ठीक करें → 4. जाँचें और जमा करें → 5. एडमिन स्वीकृत करें।",
   dropHere: "अपनी Excel / CSV फ़ाइल यहाँ खींचकर छोड़ें",
@@ -122,6 +171,26 @@ const hi: Record<DictKey, string> = {
 const mr: Record<DictKey, string> = {
   portalTitle: "APAAR विद्यार्थी डेटा व पडताळणी पोर्टल",
   portalSubtitle: "अखिल भारतीय तंत्रशिक्षण परिषद",
+=======
+  welcomeBack: "पुनः स्वागत है",
+  admissionMonitoring: "प्रवेश निगरानी",
+  anomaliesAlerts: "विसंगतियाँ एवं अलर्ट",
+  integrityGraph: "शैक्षणिक सत्यनिष्ठा ग्राफ़",
+  reportsAnalytics: "रिपोर्ट एवं विश्लेषण",
+  auditLogs: "ऑडिट लॉग",
+  helpSupport: "सहायता एवं समर्थन",
+  academicYear: "शैक्षणिक वर्ष",
+  sidebarTagline: "पारदर्शी, सत्यापन योग्य और भविष्य के लिए तैयार शैक्षणिक पारितंत्र का निर्माण",
+  noData: "अभी दिखाने के लिए कुछ नहीं",
+  accessPortal: "पोर्टल में प्रवेश",
+  studentPortal: "छात्र पोर्टल",
+  institutionPortal: "संस्थान पोर्टल",
+};
+
+const mr: Record<DictKey, string> = {
+  portalTitle: "विद्यावर्स (VidyaVerse)",
+  portalSubtitle: "APAAR विद्यार्थी ओळख व पडताळणी प्लॅटफॉर्म",
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   skip: "मुख्य मजकुराकडे जा",
   home: "मुख्यपृष्ठ",
   verify: "विद्यार्थी पडताळणी",
@@ -144,6 +213,7 @@ const mr: Record<DictKey, string> = {
   accessLog: "प्रवेश नोंद",
   outcomes: "परिणाम",
   grievance: "तक्रार",
+<<<<<<< HEAD
   heroTitle: "प्रत्येक जागा उत्तरदायी, प्रत्येक विद्यार्थी पडताळणीयोग्य",
   heroBody: "AICTE-मान्यताप्राप्त संस्थांच्या विद्यार्थी डेटाचे एकच सुरक्षित भांडार – APAAR आयडीवर आधारित, प्रवेशावेळी पडताळलेले, डिजिटल जागा लेजरने सुरक्षित आणि विद्यार्थ्याच्या संमतीने पडताळणीयोग्य.",
   forInstitutions: "संस्थांसाठी",
@@ -152,6 +222,16 @@ const mr: Record<DictKey, string> = {
   forStudentsBody: "तुमची पडताळलेली नोंद पाहा, स्वाक्षरीत प्रमाणपत्र डाउनलोड करा आणि पडताळणीवर नियंत्रण ठेवा.",
   verifyCardBody: "नियोक्ते विद्यार्थ्याच्या संमती कोड किंवा QR द्वारे नोंद पडताळतात.",
   howItWorks: "हे कसे कार्य करते",
+=======
+  heroTitle: "प्रत्येक जागा उत्तरदायी. प्रत्येक विद्यार्थी पडताळणीयोग्य.",
+  heroBody: "विद्यार्थी नोंदी, मंजूर संस्थागत प्रवेश आणि शैक्षणिक ओळख पडताळणी एका सुरक्षित, ऑडिटयोग्य परिसंस्थेत आणा.",
+  forInstitutions: "संस्थांसाठी",
+  forInstitutionsBody: "शैक्षणिक नोंदी सादर करा, विद्यार्थ्यांची माहिती प्रमाणित करा, प्रवेशावर देखरेख ठेवा आणि गुणवत्ता ट्रॅक करा.",
+  forStudents: "विद्यार्थ्यांसाठी",
+  forStudentsBody: "तुमची नोंद तपासा, संमती व्यवस्थापित करा आणि पडताळणीयोग्य प्रमाणपत्र मिळवा.",
+  verifyCardBody: "प्रमाणपत्राची सत्यता तपासा आणि अधिकृत पडताळणी प्रक्रियेद्वारे नोंदीची पुष्टी करा.",
+  howItWorks: "विद्यावर्स कसे कार्य करते",
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   searchPlaceholder: "विचारा: महाराष्ट्रात CSE मध्ये प्रवेश मर्यादा ओलांडणारी महाविद्यालये",
   notifications: "सूचना",
   privacy: "गोपनीयता धोरण",
@@ -167,6 +247,7 @@ const mr: Record<DictKey, string> = {
   approve: "मंजूर करा",
   reject: "नाकारा",
   revoke: "मागे घ्या",
+<<<<<<< HEAD
   uploadTitle: "विद्यार्थी डेटा अपलोड करा",
   uploadSteps: "1. टेम्पलेट डाउनलोड करा → 2. भरून फाइल टाका → 3. लाल चुका दुरुस्त करा → 4. तपासा व सादर करा → 5. ॲडमिन मंजूर करतो.",
   dropHere: "तुमची Excel / CSV फाइल येथे ओढून टाका",
@@ -175,6 +256,21 @@ const mr: Record<DictKey, string> = {
   sampleFile: "नमुना फाइल",
   validateSave: "तपासा व मसुदा जतन करा",
   noData: "अद्याप दाखवण्यासारखे काही नाही",
+=======
+  welcomeBack: "पुन्हा स्वागत",
+  admissionMonitoring: "प्रवेश देखरेख",
+  anomaliesAlerts: "विसंगती व सूचना",
+  integrityGraph: "शैक्षणिक सचोटी आलेख",
+  reportsAnalytics: "अहवाल व विश्लेषण",
+  auditLogs: "ऑडिट लॉग",
+  helpSupport: "मदत व सहाय्य",
+  academicYear: "शैक्षणिक वर्ष",
+  sidebarTagline: "पारदर्शक, पडताळणीयोग्य आणि भविष्यासाठी सज्ज शैक्षणिक परिसंस्था",
+  noData: "अद्याप दाखवण्यासारखे काही नाही",
+  accessPortal: "पोर्टलमध्ये प्रवेश",
+  studentPortal: "विद्यार्थी पोर्टल",
+  institutionPortal: "संस्था पोर्टल",
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 };
 
 export const DICTS: Record<Lang, Record<DictKey, string>> = { en, hi, mr };

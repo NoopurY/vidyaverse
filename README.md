@@ -24,6 +24,7 @@ npm run demo
 
 `npm run demo` does everything:
 1. Creates `.env` with fresh secrets if it doesn't exist.
+<<<<<<< HEAD
 2. Starts a local MongoDB whose data lives in `./.localdb`. The first run downloads MongoDB once (about 70 MB); after that it works offline.
 3. Loads the demo data if the database is empty.
 4. Starts the app on the first free port from 3000 and prints the login URL. Verification links and QR codes use that same port.
@@ -32,11 +33,22 @@ On the login page, click any role under **One-click demo login**. The OTP is fil
 
 - **Fresh demo data** (do this just before presenting): stop with Ctrl+C, then run `npm run demo:reset`.
 - **Health check:** `/api/health` should return `{"ok":true,"db":true,"seeded":true}`.
+=======
+2. Starts a local MongoDB replica set whose data lives in `./.localdb`. The first run downloads MongoDB once (about 70 MB); after that it works offline.
+3. Loads the demo data if the database is empty.
+4. Starts the app.
+
+Open **http://localhost:3000/login** and click any role under **One-click demo login**. In demo mode the OTP is filled in for you, so just press *Verify & sign in*. Stop everything with **Ctrl+C**; data is kept for next time.
+
+- **Reset to fresh demo data** (do this right before presenting): stop with Ctrl+C, then run `npm run demo -- --reseed`. Or, while the app is running, run `npm run seed` in a second terminal. Logged-in sessions stay valid after a reseed.
+- **Health check:** http://localhost:3000/api/health should return `{"ok":true,"db":true,"seeded":true}`.
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 
 ### Troubleshooting
 
 | Symptom | Fix |
 | --- | --- |
+<<<<<<< HEAD
 | "Invalid email or password" | Check the browser shows **this** app at the URL `npm run demo` printed (another app may hold port 3000). Password is `Demo@123`. A yellow banner on the login page means the database is down or empty. |
 | "belongs to another copy of VidyaVerse" | Another copy of the project is running its demo database. Stop it (Ctrl+C in its terminal), then rerun here. |
 | "Account locked after 5 failed attempts" | Wait 15 minutes, or run `npm run demo:reset` |
@@ -59,6 +71,17 @@ On the login page, click any role under **One-click demo login**. The OTP is fil
 ## 1. Manual setup (your own MongoDB / Atlas)
 
 Use a MongoDB **replica set** (MongoDB Atlas free tier works).
+=======
+| "Invalid email or password" | Make sure the browser shows **VidyaVerse** (another app may be using port 3000; check the URL `npm run demo` printed). Password is `Demo@123`. The login page shows a yellow banner if the database is down or empty. |
+| Yellow banner "Database has no demo data yet" | Run `npm run seed`, or `npm run demo -- --reseed` |
+| "Account locked after 5 failed attempts" | Wait 15 minutes, or run `npm run seed` (resets all accounts) |
+| Port 3000 busy | Next.js picks the next free port (3001…); use the URL it prints |
+| Page compiles slowly the first time | Normal in dev mode; open each page once before the demo |
+
+## 1. Manual setup (your own MongoDB / Atlas)
+
+Use a MongoDB **replica set**: MongoDB Atlas free tier works, since transactions need a replica set. A standalone `mongod` also works; the ledger falls back to atomic single-document updates.
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 
 ```bash
 npm install
@@ -68,7 +91,11 @@ npm install
 npm run setup
 ```
 
+<<<<<<< HEAD
 `npm run setup` writes a `.env` with fresh secrets (if none exists). Set `MONGODB_URI` in it to your Atlas connection string, then:
+=======
+`npm run setup` writes a `.env` with fresh secrets. Set `MONGODB_URI` in it to your Atlas or own MongoDB string. `npm run keys` only prints the secrets, for pasting into Vercel.
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 
 ```bash
 npm run seed
@@ -78,7 +105,11 @@ npm run seed
 npm run dev
 ```
 
+<<<<<<< HEAD
 With an Atlas (`mongodb+srv://`) URI in `.env`, `npm run demo` uses Atlas instead of the local database.
+=======
+Open http://localhost:3000. The seed prints the demo student's APAAR and the pending consent code. `npm run demo` also works with an Atlas `MONGODB_URI`: it uses it instead of the local database.
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 
 ### Environment variables (`.env.example`)
 
@@ -90,13 +121,22 @@ With an Atlas (`mongodb+srv://`) URI in `.env`, `npm run demo` uses Atlas instea
 | `HMAC_SECRET` | APAAR tokenisation (`apaarToken`) and contact hashes |
 | `FIELD_ENCRYPTION_KEY` | 32-byte key for AES-256-GCM (phone, email, parent name) |
 | `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_ID`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` | Meta WhatsApp Cloud API; leave empty for **MOCK** mode |
+<<<<<<< HEAD
 | `LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL` | Optional OpenAI-compatible LLM (AI error assistant, NL search); rule-based fallback otherwise |
+=======
+| `GROQ_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL` | Optional Groq LLM (AI error assistant, NL search); rule-based fallback when no key. Defaults: Groq endpoint, `llama-3.3-70b-versatile` |
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 | `APP_DOMAIN` | Public host, used for `did:web` and verification links (e.g. `vidyaverse.vercel.app`) |
 | `CRON_SECRET` | Protects `/api/cron/*` (Vercel sends it automatically) |
 | `DEMO_MODE` | `true` shows the mock OTP in a toast in production (demo deployments only) |
 
 ### Scripts
 
+<<<<<<< HEAD
+=======
+- `npm run demo`: one-command local demo (local DB + seed if empty + dev server); `npm run demo -- --reseed` for a fresh reset
+- `npm run setup`: writes a `.env` with fresh secrets (if none exists)
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 - `npm run dev`: development server
 - `npm run seed`: resets the database and loads demo data (≈50 institutions, ≈5,000 students over 2 years, planted frauds) and writes `public/samples/demo-upload.xlsx`
 - `npm run keys`: generates the keypair and secrets
@@ -107,6 +147,7 @@ With an Atlas (`mongodb+srv://`) URI in `.env`, `npm run demo` uses Atlas instea
 
 ## 2. Deploy to Vercel + MongoDB Atlas
 
+<<<<<<< HEAD
 1. **Atlas**: create a free cluster → Database Access: add a user → Network Access: allow `0.0.0.0/0` (or Vercel IPs) → copy the `mongodb+srv://…` connection string and add a database name, e.g. `/vidyaverse`.
 2. Run `npm run keys` locally and keep the output.
 3. Push this folder to GitHub. In **Vercel → New Project**, import the repo (set *Root Directory* to `vidyaverse` if it lives in a monorepo). Framework: Next.js.
@@ -114,6 +155,22 @@ With an Atlas (`mongodb+srv://`) URI in `.env`, `npm run demo` uses Atlas instea
 5. Deploy, then open `/api/health` and expect `"ok":true`. `vercel.json` runs the three cron jobs once a day, which the free Hobby plan allows. On Pro, change `risk-recompute` and `consent-expiry` to hourly. "Run checks now" on the AICTE dashboard runs everything on demand.
 6. Seed the Atlas database from your machine: put the Atlas `MONGODB_URI` and the same secrets in `.env`, then run `npm run seed`. The secrets must match Vercel's, because encrypted fields and tokens depend on them.
 7. Optional: WhatsApp live mode. Set the Meta variables and point the Meta webhook to `https://<domain>/api/whatsapp/webhook`, using `WHATSAPP_VERIFY_TOKEN`.
+=======
+1. **Atlas:**
+   1. Create a free M0 cluster.
+   2. Under *Database Access*, add a database user.
+   3. Under *Network Access*, add `0.0.0.0/0`, because Vercel uses changing IPs.
+   4. Under *Connect → Drivers*, copy the `mongodb+srv://…` string and add the database name before the `?`: `…mongodb.net/vidyaverse?retryWrites=true&w=majority`.
+2. **Secrets:** run `npm run keys` and keep the output.
+3. **Seed Atlas from your machine:** in `.env`, set `MONGODB_URI` to the Atlas string and paste **the same** secrets from step 2, then run `npm run seed`. The secrets must be identical on Vercel, because encrypted fields, APAAR tokens and signatures depend on them.
+4. **Vercel:**
+   1. Push to GitHub, then go to **Vercel → Add New → Project** and import the repo.
+   2. Set **Root Directory** to `vidyaverse` if this folder is inside a bigger repo. The framework is detected as Next.js.
+5. **Environment variables** (Project → Settings → Environment Variables): add `MONGODB_URI`, `AUTH_SECRET`, `SIGNING_PRIVATE_KEY`, `SIGNING_PUBLIC_KEY`, `HMAC_SECRET`, `FIELD_ENCRYPTION_KEY`, `CRON_SECRET` and `DEMO_MODE=true`. `APP_DOMAIN` is optional: without it, the app uses Vercel's production domain automatically.
+6. **Deploy**, then open `https://<your-app>.vercel.app/api/health` and expect `"ok":true`. Log in at `/login` with the one-click demo buttons.
+7. **Crons:** `vercel.json` schedules the three jobs once a day, which the free Hobby plan allows. On Pro, change `risk-recompute` and `consent-expiry` to hourly (`0 * * * *`). "Run checks now" on the AICTE dashboard runs everything on demand.
+8. **Optional, WhatsApp live mode:** set the `WHATSAPP_*` variables and point the Meta webhook to `https://<domain>/api/whatsapp/webhook` with your `WHATSAPP_VERIFY_TOKEN`.
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 
 ---
 

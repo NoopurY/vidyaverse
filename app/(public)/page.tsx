@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import Link from "next/link";
@@ -80,6 +81,18 @@ export default function Home() {
           ))}
         </ol>
       </section>
+=======
+import { HeroSection } from "@/components/home/hero";
+import { HowItWorks, RoleCards, StatisticsStrip } from "@/components/home/sections";
+
+export default function Home() {
+  return (
+    <div className="bg-white">
+      <HeroSection />
+      <StatisticsStrip />
+      <RoleCards />
+      <HowItWorks />
+>>>>>>> c4621d2a776483b138be0f0ba672019a42922020
     </div>
   );
 }
