@@ -42,7 +42,8 @@ export const POST = publicRoute({ body: Body, rate: { name: "login", limit: 10, 
   user.lockedUntil = undefined;
   await user.save();
 
-  const otpRequired = user.role !== "STUDENT";
+  // OTP is off by default (MVP demo); set OTP_REQUIRED=true to enforce it for AICTE and institution users
+  const otpRequired = process.env.OTP_REQUIRED === "true" && user.role !== "STUDENT";
   const otp = randomCode(6);
   const ch = await OtpChallenge.create({
     userId: user._id,

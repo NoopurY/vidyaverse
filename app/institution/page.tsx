@@ -277,6 +277,22 @@ export default function InstitutionDashboard() {
           <AlertsFeed compact limit={8} />
         </Card>
       </div>
+
+      {/* Outcome tracking: APAAR-linked, consent-based placement and higher-studies data */}
+      <Card>
+        <CardHeader
+          title="Employability & Outcomes"
+          description="Placement and higher-studies progression of your graduates, linked through APAAR and shown only for students who gave consent."
+        />
+        <CardBody>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <Kpi label="Graduates tracked" value={fmtNum(m.graduates)} hint="With outcome data" icon={<Users className="h-4 w-4" />} />
+            <Kpi label="Placement rate" value={fmtPct(m.placementRate)} tone={m.placementRate >= 60 ? "success" : m.placementRate >= 40 ? "warning" : undefined} hint={`${fmtNum(m.placed)} placed`} />
+            <Kpi label="Higher studies" value={fmtPct(m.higherRate)} hint={`${fmtNum(m.higher)} progressed`} />
+            <Kpi label="Employability index" value={fmtPct(Math.min(100, m.placementRate + m.higherRate))} hint="Placement + higher studies" />
+          </div>
+        </CardBody>
+      </Card>
     </div>
   );
 }

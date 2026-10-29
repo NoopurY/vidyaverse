@@ -143,7 +143,7 @@ export default function InstitutionSettings() {
           <Field label="Name" htmlFor="u-name"><Input id="u-name" required value={nu.name} onChange={(e) => setNu({ ...nu, name: e.target.value })} /></Field>
           <Field label="Email" htmlFor="u-email"><Input id="u-email" type="email" required value={nu.email} onChange={(e) => setNu({ ...nu, email: e.target.value })} /></Field>
           <Field label="Temporary password" htmlFor="u-pass" hint="At least 10 characters with an uppercase letter and a digit"><Input id="u-pass" type="password" required minLength={10} value={nu.password} onChange={(e) => setNu({ ...nu, password: e.target.value })} /></Field>
-          <Field label="Mobile (for OTP)" htmlFor="u-phone"><Input id="u-phone" inputMode="numeric" maxLength={10} value={nu.phone} onChange={(e) => setNu({ ...nu, phone: e.target.value })} /></Field>
+          <Field label="Mobile (optional)" htmlFor="u-phone"><Input id="u-phone" inputMode="numeric" maxLength={10} value={nu.phone} onChange={(e) => setNu({ ...nu, phone: e.target.value })} /></Field>
           <Field label="Role" htmlFor="u-perm"><Select id="u-perm" value={nu.permission} onChange={(e) => setNu({ ...nu, permission: e.target.value })}><option value="operator">Operator (upload & edit)</option><option value="admin">Admin (approve, users, API)</option></Select></Field>
           <div className="flex justify-end gap-2"><Button type="button" variant="secondary" onClick={() => setAddUser(false)}>Cancel</Button><Button type="submit">Add user</Button></div>
         </form>

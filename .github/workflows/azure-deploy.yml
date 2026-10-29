@@ -27,6 +27,7 @@ jobs:
       - run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: 1
+          NEXT_PUBLIC_DEMO_MODE: "true" # shows the demo-account shortcuts on the login page
 
       - name: Assemble standalone package
         run: |

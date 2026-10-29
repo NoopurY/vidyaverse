@@ -35,17 +35,10 @@ const ROLE_HOME: Record<string, string> = {
   STUDENT: "/student",
 };
 
-/** Placeholder only: swap for the authorised Ministry emblem asset once supplied. */
-function EmblemPlaceholder() {
+function MinistryLogo() {
   return (
-    <span
-      role="img"
-      aria-label="Placeholder for the authorised Ministry of Education emblem"
-      title="Placeholder – replace with the authorised emblem asset"
-      className="flex h-11 w-9 shrink-0 items-center justify-center rounded-md border border-dashed border-vv-line bg-vv-ice text-[7px] font-bold uppercase leading-tight tracking-wide text-vv-muted"
-    >
-      Em&shy;blem
-    </span>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src="/brand/ministry-of-education.png" alt="Ministry of Education, Government of India" className="h-12 w-auto shrink-0 object-contain" />
   );
 }
 
@@ -178,7 +171,7 @@ export function SiteHeader() {
         {/* Left: government identity + product branding */}
         <div className="flex min-w-0 items-center gap-4">
           <div className="hidden items-center gap-2.5 lg:flex">
-            <EmblemPlaceholder />
+            <MinistryLogo />
             <div className="hidden leading-tight 2xl:block">
               <p className="text-[13px] font-semibold text-vv-text">Ministry of Education</p>
               <p className="text-[11px] text-vv-muted">Government of India</p>

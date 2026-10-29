@@ -20,7 +20,7 @@ export type InstitutionDetail = {
     badge: "green" | "amber" | "red";
     accreditation?: { nba?: boolean; naacGrade?: string };
   };
-  metrics: { intake: number; enrolled: number; fillPct: number; seatsRemaining: number; openFlags: number; placementRate: number; higherRate: number; enrolledBy: Record<string, number> };
+  metrics: { intake: number; enrolled: number; fillPct: number; seatsRemaining: number; openFlags: number; placementRate: number; higherRate: number; graduates: number; placed: number; higher: number; enrolledBy: Record<string, number> };
   ledger: { programId: string; seatType: string; approved: number; consumed: number; remaining: number }[];
   issues: IssueRow[];
   issueCounts: Record<string, number>;
