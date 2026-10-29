@@ -1,4 +1,4 @@
-# One-time Azure provisioning for VidyaVerse (App Service on Linux, Node 20).
+# One-time Azure provisioning for VidyaVerse (App Service on Linux, Node 22).
 # Usage:  az login ; ./infra/provision-azure.ps1 [-Location centralindia] [-AppName vidyaverse]
 param(
   [string]$AppName = "vidyaverse",
@@ -7,11 +7,13 @@ param(
   [string]$Location = "centralindia",
   [string]$Sku = "B1"
 )
-$ErrorActionPreference = "Stop"
+# az writes warnings to stderr, which PowerShell 5.1 treats as errors under "Stop"; rely on exit codes instead
+$ErrorActionPreference = "Continue"
+function az { & az.cmd @args; if ($LASTEXITCODE -ne 0) { throw "az $($args[0..2] -join ' ') failed" } }
 
 az group create --name $ResourceGroup --location $Location | Out-Null
 az appservice plan create --name $Plan --resource-group $ResourceGroup --is-linux --sku $Sku | Out-Null
-az webapp create --name $AppName --resource-group $ResourceGroup --plan $Plan --runtime "NODE:20-lts" | Out-Null
+az webapp create --name $AppName --resource-group $ResourceGroup --plan $Plan --runtime "NODE:22-lts" | Out-Null
 az webapp config set --name $AppName --resource-group $ResourceGroup --startup-file "node server.js" --always-on true --http20-enabled true --min-tls-version 1.2 --ftps-state Disabled | Out-Null
 az webapp update --name $AppName --resource-group $ResourceGroup --https-only true | Out-Null
 
