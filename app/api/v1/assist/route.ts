@@ -7,11 +7,7 @@ import { ISSUE_LABEL } from "@/lib/constants";
 export const dynamic = "force-dynamic";
 
 const Body = z.object({
-<<<<<<< HEAD
   lang: z.enum(["en", "hi", "mr"]).default("en"),
-=======
-  lang: z.enum(["en", "hi"]).default("en"),
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   errors: z
     .array(z.object({ rowNumber: z.number().int(), type: z.string().max(40), field: z.string().max(40).optional(), message: z.string().max(300) }))
     .min(1)
@@ -28,11 +24,7 @@ export const POST = route({ roles: ["INSTITUTION"], body: Body, rate: { name: "a
   }));
   // Messages never contain contact details or parent names (rule messages only), so they are safe to send to the LLM.
   const llm = await chatJson(
-<<<<<<< HEAD
     `You help staff at small Indian colleges fix spreadsheet errors when uploading student data to AICTE. For each error, reply in ${{ en: "simple English", hi: "simple Hindi", mr: "simple Marathi" }[body.lang]} with one short sentence explaining the problem and one practical fix. Respond as JSON: {"items":[{"rowNumber":n,"explanation":"...","fix":"..."}]}`,
-=======
-    `You help staff at small Indian colleges fix spreadsheet errors when uploading student data to AICTE. For each error, reply in ${body.lang === "hi" ? "simple Hindi" : "simple English"} with one short sentence explaining the problem and one practical fix. Respond as JSON: {"items":[{"rowNumber":n,"explanation":"...","fix":"..."}]}`,
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
     JSON.stringify(body.errors)
   );
   const items = (llm as { items?: { rowNumber: number; explanation: string; fix: string }[] } | null)?.items;

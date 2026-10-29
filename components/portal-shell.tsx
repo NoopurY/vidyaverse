@@ -1,25 +1,6 @@
 "use client";
 
 import Link from "next/link";
-<<<<<<< HEAD
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import useSWR from "swr";
-import { signOut, useSession } from "next-auth/react";
-import { Bell, ChevronRight, Search, type LucideIcon } from "lucide-react";
-import { toast } from "sonner";
-import { useT } from "./providers";
-import { StatusBadge } from "./ui";
-import type { DictKey } from "@/lib/i18n";
-import { api } from "@/lib/fetcher";
-import { cn, fmtDate } from "@/lib/utils";
-
-export type NavItem = { href: string; label: DictKey; icon: LucideIcon };
-
-const IDLE_MS = 15 * 60 * 1000;
-
-/** Signs admins out after 15 minutes without interaction; keeps the server session's activity stamp fresh. */
-=======
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
@@ -58,7 +39,6 @@ const YearCtx = createContext<{ year: string; setYear: (y: string) => void }>({
 export const useAcademicYear = () => useContext(YearCtx);
 
 /** Signs admins out after 15 minutes without interaction; keeps server session fresh */
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 function IdleTimer() {
   const { data, update } = useSession();
   const last = useRef(Date.now());
@@ -80,13 +60,9 @@ function IdleTimer() {
       if (idle > IDLE_MS) {
         toast.warning("Signed out after 15 minutes of inactivity");
         signOut({ callbackUrl: "/login?reason=idle" });
-<<<<<<< HEAD
-      } else if (idle > IDLE_MS - 60_000 && idle < IDLE_MS - 50_000) toast.info("You will be signed out in 1 minute due to inactivity");
-=======
       } else if (idle > IDLE_MS - 60_000 && idle < IDLE_MS - 50_000) {
         toast.info("You will be signed out in 1 minute due to inactivity");
       }
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
     }, 10_000);
     return () => {
       events.forEach((e) => window.removeEventListener(e, bump));
@@ -97,8 +73,6 @@ function IdleTimer() {
 }
 
 type AlertItem = { _id: string; message: string; severity: string; status: string; createdAt: string; type: string };
-<<<<<<< HEAD
-=======
 const ALERTS_KEY = "/api/v1/alerts?limit=8";
 
 function useOutsideClose(open: boolean, close: () => void) {
@@ -116,23 +90,12 @@ function useOutsideClose(open: boolean, close: () => void) {
   }, [open, close]);
   return ref;
 }
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 
 function NotificationsBell({ alertsHref }: { alertsHref: string }) {
   const { t } = useT();
   const [open, setOpen] = useState(false);
-<<<<<<< HEAD
-  const { data, mutate } = useSWR<{ items: AlertItem[]; unread: number }>("/api/v1/alerts?limit=8", { refreshInterval: 10_000 });
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const close = (e: MouseEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
-    document.addEventListener("mousedown", close);
-    return () => document.removeEventListener("mousedown", close);
-  }, []);
-=======
   const { data, mutate } = useSWR<{ items: AlertItem[]; unread: number }>(ALERTS_KEY, { refreshInterval: 10_000 });
   const ref = useOutsideClose(open, () => setOpen(false));
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   const ack = async (id: string) => {
     try {
       await api(`/api/v1/alerts/${id}`, "PATCH", { action: "acknowledge" });
@@ -143,31 +106,6 @@ function NotificationsBell({ alertsHref }: { alertsHref: string }) {
   };
   return (
     <div className="relative" ref={ref}>
-<<<<<<< HEAD
-      <button onClick={() => setOpen((o) => !o)} className="relative rounded p-2 text-navy hover:bg-navy-tint" aria-label={`${t("notifications")} (${data?.unread ?? 0} unread)`} aria-expanded={open}>
-        <Bell className="h-5 w-5" />
-        {!!data?.unread && <span className="absolute -right-0.5 -top-0.5 min-w-[18px] rounded-full bg-danger px-1 text-center text-[10px] font-bold leading-[18px] text-white">{data.unread > 99 ? "99+" : data.unread}</span>}
-      </button>
-      {open && (
-        <div className="absolute right-0 z-30 mt-2 w-[min(92vw,380px)] rounded border border-line bg-white shadow-lg">
-          <div className="flex items-center justify-between border-b border-line px-4 py-3">
-            <p className="font-semibold">{t("notifications")}</p>
-            <Link href={alertsHref} className="text-xs font-medium text-navy hover:underline" onClick={() => setOpen(false)}>
-              View all
-            </Link>
-          </div>
-          <ul className="max-h-96 overflow-y-auto">
-            {!data?.items.length && <li className="px-4 py-6 text-center text-sm text-muted">No alerts</li>}
-            {data?.items.map((a) => (
-              <li key={a._id} className="border-b border-line px-4 py-3 last:border-0">
-                <div className="flex items-start justify-between gap-2">
-                  <StatusBadge status={a.severity} label={a.severity === "high" ? "High" : a.severity === "medium" ? "Medium" : "Info"} />
-                  <span className="text-[11px] text-muted">{fmtDate(a.createdAt, true)}</span>
-                </div>
-                <p className="mt-1.5 text-sm">{a.message}</p>
-                {a.status === "open" && (
-                  <button onClick={() => ack(a._id)} className="mt-1.5 text-xs font-medium text-navy hover:underline">
-=======
       <button
         onClick={() => setOpen((o) => !o)}
         className="relative rounded-lg p-2 text-muted transition-colors hover:bg-page hover:text-navy focus-visible:ring-2 focus-visible:ring-navy/20"
@@ -215,7 +153,6 @@ function NotificationsBell({ alertsHref }: { alertsHref: string }) {
                     onClick={() => ack(a._id)}
                     className="mt-2 text-[11px] font-semibold text-navy hover:underline"
                   >
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
                     Acknowledge
                   </button>
                 )}
@@ -228,8 +165,6 @@ function NotificationsBell({ alertsHref }: { alertsHref: string }) {
   );
 }
 
-<<<<<<< HEAD
-=======
 const ROLE_LABEL: Record<string, string> = {
   "AICTE_ADMIN:full": "AICTE Admin",
   "AICTE_ADMIN:regional": "Regional Officer",
@@ -338,7 +273,6 @@ function UserMenu() {
   );
 }
 
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 function NlSearch() {
   const { t } = useT();
   const router = useRouter();
@@ -346,11 +280,7 @@ function NlSearch() {
   return (
     <form
       role="search"
-<<<<<<< HEAD
-      className="relative w-full max-w-xl"
-=======
       className="relative w-full max-w-md"
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
       onSubmit={(e) => {
         e.preventDefault();
         if (q.trim().length > 1) router.push(`/aicte/search?q=${encodeURIComponent(q.trim())}`);
@@ -358,11 +288,6 @@ function NlSearch() {
     >
       <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" aria-hidden />
       <label htmlFor="nl-search" className="sr-only">
-<<<<<<< HEAD
-        Natural-language search
-      </label>
-      <input id="nl-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("searchPlaceholder")} className="input h-10 pl-9" />
-=======
         Search institutions or ask a question
       </label>
       <input
@@ -372,22 +297,10 @@ function NlSearch() {
         placeholder={t("searchPlaceholder")}
         className="h-9 w-full rounded-lg border border-line bg-page pl-9 pr-3 text-xs text-ink placeholder:text-muted/80 focus:border-navy focus:bg-white focus:outline-none focus:ring-2 focus:ring-navy/15"
       />
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
     </form>
   );
 }
 
-<<<<<<< HEAD
-const SEGMENT_LABEL: Record<string, string> = {
-  aicte: "AICTE",
-  institution: "Institution",
-  student: "Student",
-  institutions: "Institutions",
-  alerts: "Alerts & Flags",
-  ledger: "Seat Ledger",
-  reports: "Reports",
-  audit: "Audit Log",
-=======
 function YearPicker() {
   const { t } = useT();
   const { year, setYear } = useAcademicYear();
@@ -419,7 +332,6 @@ const SEGMENT_LABEL: Record<string, string> = {
   ledger: "Admission Monitoring",
   reports: "Reports & Analytics",
   audit: "Audit Logs",
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   settings: "Settings",
   students: "Students",
   upload: "Upload",
@@ -431,14 +343,6 @@ const SEGMENT_LABEL: Record<string, string> = {
   search: "Search",
 };
 
-<<<<<<< HEAD
-function Breadcrumbs() {
-  const path = usePathname();
-  const parts = path.split("/").filter(Boolean);
-  return (
-    <nav aria-label="Breadcrumb" className="mb-4 text-xs text-muted">
-      <ol className="flex flex-wrap items-center gap-1">
-=======
 export function Breadcrumbs() {
   const path = usePathname();
   const parts = path.split("/").filter(Boolean);
@@ -446,23 +350,11 @@ export function Breadcrumbs() {
   return (
     <nav aria-label="Breadcrumb" className="mb-4 text-xs text-muted">
       <ol className="flex flex-wrap items-center gap-1.5">
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
         {parts.map((p, i) => {
           const href = "/" + parts.slice(0, i + 1).join("/");
           const label = SEGMENT_LABEL[p] ?? (p.length > 14 ? "Details" : decodeURIComponent(p));
           const last = i === parts.length - 1;
           return (
-<<<<<<< HEAD
-            <li key={href} className="flex items-center gap-1">
-              {i > 0 && <ChevronRight className="h-3 w-3" aria-hidden />}
-              {last ? (
-                <span aria-current="page" className="font-medium text-ink">
-                  {i === 0 ? "Dashboard" : label}
-                </span>
-              ) : (
-                <Link href={href} className="hover:text-navy hover:underline">
-                  {i === 0 ? `${label} Home` : label}
-=======
             <li key={href} className="flex items-center gap-1.5">
               {i > 0 && <ChevronRight className="h-3 w-3 text-muted/60" aria-hidden />}
               {last ? (
@@ -472,7 +364,6 @@ export function Breadcrumbs() {
               ) : (
                 <Link href={href} className="hover:text-navy hover:underline transition-colors">
                   {i === 0 ? "Dashboard" : label}
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
                 </Link>
               )}
             </li>
@@ -483,48 +374,6 @@ export function Breadcrumbs() {
   );
 }
 
-<<<<<<< HEAD
-export function PortalShell({ nav, children, search, bell = true, alertsHref = "#" }: { nav: NavItem[]; children: React.ReactNode; search?: boolean; bell?: boolean; alertsHref?: string }) {
-  const { t } = useT();
-  const path = usePathname();
-  const root = nav[0].href;
-  return (
-    <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col md:flex-row">
-      <IdleTimer />
-      <aside className="border-b border-line bg-white md:w-60 md:shrink-0 md:border-b-0 md:border-r">
-        <nav aria-label="Portal" className="md:sticky md:top-0">
-          <ul className="flex gap-1 overflow-x-auto p-2 md:flex-col md:p-3">
-            {nav.map((n) => {
-              const active = n.href === root ? path === root : path.startsWith(n.href);
-              const Icon = n.icon;
-              return (
-                <li key={n.href}>
-                  <Link
-                    href={n.href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn("flex items-center gap-3 whitespace-nowrap rounded px-3 py-2.5 text-sm font-medium text-ink hover:bg-navy-tint hover:text-navy", active && "bg-navy-tint text-navy shadow-[inset_3px_0_0_#0B3D91]")}
-                  >
-                    <Icon className="h-[18px] w-[18px]" aria-hidden />
-                    {t(n.label)}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      </aside>
-      <div className="flex min-w-0 flex-1 flex-col">
-        <div className="flex items-center justify-between gap-3 border-b border-line bg-white px-4 py-2.5 md:px-6">
-          {search ? <NlSearch /> : <span />}
-          {bell && <NotificationsBell alertsHref={alertsHref} />}
-        </div>
-        <main id="main" className="flex-1 px-4 py-6 md:px-6" tabIndex={-1}>
-          <Breadcrumbs />
-          {children}
-        </main>
-      </div>
-    </div>
-=======
 function SideNavLink({
   item,
   root,
@@ -773,6 +622,5 @@ export function PortalShell({
         </div>
       </div>
     </YearCtx.Provider>
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   );
 }

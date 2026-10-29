@@ -7,20 +7,13 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { ArrowLeft, PlayCircle } from "lucide-react";
 import { toast } from "sonner";
-<<<<<<< HEAD
-import { Button, Card, CardBody, CardHeader, EmptyState, ErrorNote, Kpi, PageHeader, Select, Skeleton, StatusBadge, Table, Tip } from "@/components/ui";
-=======
 import { Button, Card, CardBody, CardHeader, EmptyState, ErrorNote, Kpi, Skeleton, StatusBadge, Table, Tip } from "@/components/ui";
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 import { AlertsFeed } from "@/components/aicte/alerts-feed";
 import { IndiaMap } from "@/components/aicte/india-map";
 import { WhatsAppSimulator } from "@/components/aicte/whatsapp-simulator";
 import { useT } from "@/components/providers";
-<<<<<<< HEAD
-=======
 import { WelcomeHero } from "@/components/welcome-hero";
 import { useAcademicYear } from "@/components/portal-shell";
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 import { api, qs } from "@/lib/fetcher";
 import { fmtNum, fmtPct } from "@/lib/utils";
 
@@ -47,11 +40,7 @@ export default function AicteDashboard() {
   const { data: session } = useSession();
   const readonly = session?.user?.permission === "readonly";
   const [state, setState] = useState<string | null>(null);
-<<<<<<< HEAD
-  const [year, setYear] = useState("2025-26");
-=======
   const { year } = useAcademicYear();
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
   const [metric, setMetric] = useState<"fill" | "flags">("fill");
   const [running, setRunning] = useState(false);
   const { data, error, isLoading, mutate } = useSWR<Dash>(`/api/v1/dashboard${qs({ state, year })}`, { refreshInterval: 10_000, keepPreviousData: true });
@@ -73,24 +62,6 @@ export default function AicteDashboard() {
   const k = data?.kpis;
   return (
     <>
-<<<<<<< HEAD
-      <PageHeader
-        title={state ? `${state} – State Dashboard` : `${t("dashboard")} – ${data?.scope ?? "National"}`}
-        description="Live view of intake, enrolment and fraud signals. Updates every 10 seconds."
-        actions={
-          <>
-            <label htmlFor="year" className="sr-only">Academic year</label>
-            <Select id="year" value={year} onChange={(e) => setYear(e.target.value)} className="w-32">
-              <option>2025-26</option>
-              <option>2024-25</option>
-            </Select>
-            {!readonly && (
-              <Button onClick={runChecks} loading={running}>
-                <PlayCircle className="h-4 w-4" aria-hidden /> {t("runChecks")}
-              </Button>
-            )}
-          </>
-=======
       <WelcomeHero
         title="AICTE Student Intelligence Portal"
         subtitle={`Monitor admissions, verify academic identities and ensure a transparent and compliant higher education ecosystem. ${state ? `Viewing: ${state}` : `Scope: ${data?.scope ?? "National"}`} · ${year}`}
@@ -100,7 +71,6 @@ export default function AicteDashboard() {
               <PlayCircle className="h-4 w-4" aria-hidden /> {t("runChecks")}
             </Button>
           )
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
         }
       />
       <ErrorNote error={error} />

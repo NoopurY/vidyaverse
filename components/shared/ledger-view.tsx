@@ -17,55 +17,16 @@ export function LedgerView({ programs }: { programs: LedgerProgram[] }) {
       {programs.map((p) => {
         const reg = p.seats.find((s) => s.seatType === "regular");
         return (
-<<<<<<< HEAD
-          <div key={p.programId} className="rounded border border-line p-4">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <p className="font-semibold">{p.name}</p>
-                <p className="text-xs text-muted">
-=======
           <div key={p.programId} className="rounded-xl border border-line bg-white p-5 shadow-xs">
             <div className="flex items-start justify-between gap-2 border-b border-line pb-3">
               <div>
                 <p className="font-bold text-sm text-ink">{p.name}</p>
                 <p className="text-xs text-muted font-mono">
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
                   {p.programId}
                   {p.discipline && ` · ${p.discipline}`}
                 </p>
               </div>
               {reg && (
-<<<<<<< HEAD
-                <span className={reg.remaining <= 0 ? "text-sm font-semibold text-danger" : reg.consumed / reg.approved >= 0.9 ? "text-sm font-semibold text-[#7A5A00]" : "text-sm font-semibold text-success"}>
-                  {reg.remaining <= 0 ? "Full" : `${reg.remaining} left`}
-                </span>
-              )}
-            </div>
-            <table className="mt-3 w-full text-sm">
-              <thead>
-                <tr className="text-left text-xs text-muted">
-                  <th className="pb-1 font-medium">Seat type</th>
-                  <th className="pb-1 text-right font-medium">Approved</th>
-                  <th className="pb-1 text-right font-medium">Consumed</th>
-                  <th className="pb-1 text-right font-medium">Remaining</th>
-                  <th className="w-1/3 pb-1" aria-label="Usage" />
-                </tr>
-              </thead>
-              <tbody>
-                {p.seats.length === 0 && (
-                  <tr>
-                    <td colSpan={5} className="py-2 text-xs text-muted">No seat tokens issued for this year.</td>
-                  </tr>
-                )}
-                {p.seats.map((s) => (
-                  <tr key={s.seatType}>
-                    <td className="py-1">{SEAT_TYPE_LABEL[s.seatType] ?? s.seatType}</td>
-                    <td className="py-1 text-right">{s.approved}</td>
-                    <td className="py-1 text-right">{s.consumed}</td>
-                    <td className={s.remaining <= 0 ? "py-1 text-right font-semibold text-danger" : "py-1 text-right"}>{s.remaining}</td>
-                    <td className="py-1 pl-3">
-                      <Progress value={s.consumed} max={s.approved} label={`${p.name} ${s.seatType} seats used`} />
-=======
                 <span
                   className={
                     reg.remaining <= 0
@@ -119,7 +80,6 @@ export function LedgerView({ programs }: { programs: LedgerProgram[] }) {
                         max={s.approved}
                         label={`${p.name} ${s.seatType} seats used`}
                       />
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
                     </td>
                   </tr>
                 ))}

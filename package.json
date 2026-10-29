@@ -13,10 +13,7 @@
     "keys": "tsx scripts/keys.ts",
     "build:map": "tsx scripts/build-map.ts",
     "demo": "node scripts/demo.mjs",
-<<<<<<< HEAD
     "demo:reset": "node scripts/demo.mjs --reseed",
-=======
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
     "setup": "tsx scripts/keys.ts --write"
   },
   "engines": {

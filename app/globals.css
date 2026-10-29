@@ -4,19 +4,13 @@
 
 :root {
   color-scheme: light;
-<<<<<<< HEAD
-=======
   --font-noto: "Inter", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-noto-deva: "Noto Sans Devanagari", "Devanagari MT", -apple-system, BlinkMacSystemFont, sans-serif;
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 }
 
 html {
   font-size: 16px;
-<<<<<<< HEAD
-=======
   scroll-behavior: smooth;
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 }
 html[data-fs="sm"] {
   font-size: 14.5px;
@@ -26,16 +20,6 @@ html[data-fs="lg"] {
 }
 
 body {
-<<<<<<< HEAD
-  @apply bg-page text-ink text-sm antialiased;
-}
-
-/* Visible focus for keyboard users (WCAG 2.4.7) */
-:focus-visible {
-  outline: 3px solid #ff9933;
-  outline-offset: 2px;
-  border-radius: 4px;
-=======
   @apply bg-page text-ink text-sm antialiased font-sans;
   background-color: #F5F8FC;
   color: #152238;
@@ -46,44 +30,10 @@ body {
   outline: 2.5px solid #FF9933;
   outline-offset: 2px;
   border-radius: 6px;
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 }
 
 @layer components {
   .page-title {
-<<<<<<< HEAD
-    @apply text-2xl font-semibold text-ink;
-  }
-  .card-title {
-    @apply text-lg font-semibold text-ink;
-  }
-  .muted {
-    @apply text-muted;
-  }
-  .input {
-    @apply h-10 w-full rounded border border-line bg-white px-3 text-sm text-ink placeholder:text-muted focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20 disabled:bg-page;
-  }
-  .label {
-    @apply mb-1 block text-sm font-medium text-ink;
-  }
-  .th {
-    @apply whitespace-nowrap border-b border-line bg-navy-tint/60 px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-navy;
-  }
-  .td {
-    @apply border-b border-line px-3 py-2.5 align-top;
-  }
-  .flagged-row {
-    box-shadow: inset 4px 0 0 #c62828;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-=======
     @apply text-2xl font-bold tracking-tight text-ink md:text-3xl;
     color: #152238;
   }
@@ -154,4 +104,3 @@ body {
 .vv-float { animation: vv-float 6s ease-in-out infinite; }
 .vv-float-slow { animation: vv-float 8s ease-in-out infinite; animation-delay: -2s; }
 .vv-rise { animation: vv-rise 0.6s ease-out both; }
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020

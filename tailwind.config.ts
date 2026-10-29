@@ -5,25 +5,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-<<<<<<< HEAD
-        navy: { DEFAULT: "#0B3D91", hover: "#082F6E", tint: "#E8EEF9" },
-        saffron: "#FF9933",
-        indgreen: "#138808",
-        danger: "#C62828",
-        warning: "#E6A700",
-        success: "#138808",
-        page: "#F5F7FA",
-        line: "#DDE3EA",
-        ink: "#1A1A1A",
-        muted: "#5F6B7A",
-      },
-      fontFamily: {
-        sans: ["var(--font-noto)", "var(--font-noto-deva)", "system-ui", "sans-serif"],
-      },
-      borderRadius: { DEFAULT: "8px", lg: "8px", md: "6px" },
-      boxShadow: { card: "0 1px 2px rgba(16,24,40,0.04)" },
-      fontSize: { kpi: ["1.75rem", { lineHeight: "2.25rem", fontWeight: "600" }] },
-=======
         navy: {
           DEFAULT: "#0B3D91",
           deep: "#082B63",
@@ -103,7 +84,6 @@ const config: Config = {
         kpi: ["2rem", { lineHeight: "2.25rem", fontWeight: "700" }],
         display: ["3.25rem", { lineHeight: "1.15", fontWeight: "700", letterSpacing: "-0.02em" }],
       },
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
     },
   },
   plugins: [],

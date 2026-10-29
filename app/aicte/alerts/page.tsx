@@ -1,11 +1,7 @@
 "use client";
 
-<<<<<<< HEAD
-import { useState } from "react";
-=======
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
@@ -95,12 +91,6 @@ export default function AlertsPage() {
   const { data: session } = useSession();
   const readonly = session?.user?.permission === "readonly";
   const [status, setStatus] = useState("");
-<<<<<<< HEAD
-  return (
-    <>
-      <PageHeader title="Alerts & Flags" description="Real-time alerts, validation issues, duplicate review and the fraud graph." />
-      <Tabs defaultValue="alerts">
-=======
   const params = useSearchParams();
   const router = useRouter();
   const [tab, setTab] = useState(params.get("tab") ?? "alerts");
@@ -113,7 +103,6 @@ export default function AlertsPage() {
     <>
       <PageHeader title="Anomalies & Alerts" description="Real-time alerts, validation issues, duplicate review and the fraud graph." />
       <Tabs value={tab} onValueChange={changeTab}>
->>>>>>> c4621d2a776483b138be0f0ba672019a42922020
         <TabsList>
           <Tab value="alerts">Alerts</Tab>
           {!readonly && <Tab value="issues">Validation Issues</Tab>}
